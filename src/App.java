@@ -120,6 +120,9 @@ class App {
                     System.out.print("Enter the title of the book you want to check out: ");
                     String checkoutTitle = System.console().readLine();
                     List<Book> searchResultsBooksC = library.searchBooks(checkoutTitle);
+                    // Create a prompt for a registered member to enter their credentials to be able to check the book out
+                    
+
                     if (searchResultsBooksC.size() == 0) {
                         System.out.println("No books found with the title: " + checkoutTitle);
                     } else {
