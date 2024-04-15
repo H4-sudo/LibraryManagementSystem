@@ -45,4 +45,27 @@ public class Library {
         }
         return searchResults;
     }
+
+    public void lendBook(Book book, Member member) {
+        if (book.isAvailable()) {
+            book.toggleAvailability();
+            member.addBorrowedBook(book);
+        }
+    }
+
+    public void returnBook(Book book, Member member) {
+        if (member.getBorrowedBooks().contains(book)) {
+            book.toggleAvailability();
+            member.removeBorrowedBook(book);
+        }
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
 }

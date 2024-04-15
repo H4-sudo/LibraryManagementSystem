@@ -1,6 +1,14 @@
 import java.util.List;
 
 class App {
+    /**
+     * The main method is the entry point of the Library Management System application.
+     * It displays a menu of options to the user and performs corresponding actions based on the user's choice.
+     * The user can add books, remove books, add members, remove members, search for books, search for members, or exit the application.
+     * The method uses the Library class to perform these operations.
+     *
+     * @param args The command-line arguments passed to the application.
+     */
     public static void main(String[] args) {
         Library library = new Library();
 
@@ -20,7 +28,11 @@ class App {
             System.out.println("4. Remove a member");
             System.out.println("5. Search for books");
             System.out.println("6. Search for members");
-            System.out.println("7. Exit");
+            System.out.println("7. Check out a book");
+            System.out.println("8. Check in a book");
+            System.out.println("9. View all books");
+            System.out.println("10. View all members");
+            System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(System.console().readLine());
             switch (choice) {
@@ -103,7 +115,74 @@ class App {
                         }
                     }
                     break;
+
                 case 7:
+                    System.out.print("Enter the title of the book you want to check out: ");
+                    String checkoutTitle = System.console().readLine();
+                    List<Book> searchResultsBooksC = library.searchBooks(checkoutTitle);
+                    if (searchResultsBooksC.size() == 0) {
+                        System.out.println("No books found with the title: " + checkoutTitle);
+                    } else {
+                        System.out.println("Select the book you want to check out:");
+                        for (int i = 0; i < searchResultsBooksC.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsBooksC.get(i).getTitle() + " by " + searchResultsBooksC.get(i).getAuthor());
+                        }
+                        int bookIndexC = Integer.parseInt(System.console().readLine());
+                        Book bookToCheckOut = searchResultsBooksC.get(bookIndexC - 1);
+                        System.out.print("Enter the name of the member: ");
+                        String memberNameC = System.console().readLine();
+                        Member memberToCheckOut = new Member(memberNameC, "");
+                        library.lendBook(bookToCheckOut, memberToCheckOut);
+                        System.out.println("Book checked out successfully!");
+                    }
+                    break;
+
+                case 8:
+                    System.out.print("Enter the title of the book you want to check in: ");
+                    String checkinTitle = System.console().readLine();
+                    List<Book> searchResultsBooksI = library.searchBooks(checkinTitle);
+                    if (searchResultsBooksI.size() == 0) {
+                        System.out.println("No books found with the title: " + checkinTitle);
+                    } else {
+                        System.out.println("Select the book you want to check in:");
+                        for (int i = 0; i < searchResultsBooksI.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsBooksI.get(i).getTitle() + " by " + searchResultsBooksI.get(i).getAuthor());
+                        }
+                        System.out.print("Enter the index of the book you want to check in: ");
+                        int bookIndexI = Integer.parseInt(System.console().readLine());
+                        Book bookToCheckIn = searchResultsBooksI.get(bookIndexI - 1);
+                        
+                        Member memberToCheckIn = new Member("", ""); // Initialize memberToCheckIn with a valid value
+                        library.returnBook(bookToCheckIn, memberToCheckIn);
+                        System.out.println("Book checked in successfully!");
+                    }
+                    break;
+
+                case 9:
+                    List<Book> allBooks = library.getBooks();
+                    if (allBooks.size() == 0) {
+                        System.out.println("No books found in the library.");
+                    } else {
+                        System.out.println("All books in the library:");
+                        for (int i = 0; i < allBooks.size(); i++) {
+                            System.out.println((i + 1) + ". " + allBooks.get(i).getTitle() + " by " + allBooks.get(i).getAuthor());
+                        }
+                    }
+                    break;
+                
+                case 10:
+                    List<Member> allMembers = library.getMembers();
+                    if (allMembers.size() == 0) {
+                        System.out.println("No members found in the library.");
+                    } else {
+                        System.out.println("All members in the library:");
+                        for (int i = 0; i < allMembers.size(); i++) {
+                            System.out.println((i + 1) + ". " + allMembers.get(i).getName() + " (" + allMembers.get(i).getEmail() + ")");
+                        }
+                    }
+                    break;
+
+                case 0:
                     System.out.println("Thank you for using the Library Management System!");
                     System.exit(0);
                 
