@@ -32,6 +32,7 @@ class App {
             System.out.println("8. Check in a book");
             System.out.println("9. View all books");
             System.out.println("10. View all members");
+            System.out.println("11. View all books checked out");
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(System.console().readLine());
@@ -120,9 +121,6 @@ class App {
                     System.out.print("Enter the title of the book you want to check out: ");
                     String checkoutTitle = System.console().readLine();
                     List<Book> searchResultsBooksC = library.searchBooks(checkoutTitle);
-                    // Create a prompt for a registered member to enter their credentials to be able to check the book out
-                    
-
                     if (searchResultsBooksC.size() == 0) {
                         System.out.println("No books found with the title: " + checkoutTitle);
                     } else {
@@ -130,13 +128,24 @@ class App {
                         for (int i = 0; i < searchResultsBooksC.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResultsBooksC.get(i).getTitle() + " by " + searchResultsBooksC.get(i).getAuthor());
                         }
+                        System.out.print("Enter the index of the book you want to check out: ");
                         int bookIndexC = Integer.parseInt(System.console().readLine());
                         Book bookToCheckOut = searchResultsBooksC.get(bookIndexC - 1);
                         System.out.print("Enter the name of the member: ");
                         String memberNameC = System.console().readLine();
-                        Member memberToCheckOut = new Member(memberNameC, "");
+                        List<Member> searchResultsMembersC = library.searchMembers(memberNameC);
+                        if (searchResultsMembersC.size() == 0) {
+                            System.out.println("No members found with the name: " + memberNameC);
+                        } else {
+                            System.out.println("Select the member you want to check out the book:");
+                            for (int i = 0; i < searchResultsMembersC.size(); i++) {
+                                System.out.println((i + 1) + ". " + searchResultsMembersC.get(i).getName() + " (" + searchResultsMembersC.get(i).getEmail() + ")");
+                            }
+                        int memberIndexC = Integer.parseInt(System.console().readLine());
+                        Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
                         library.lendBook(bookToCheckOut, memberToCheckOut);
                         System.out.println("Book checked out successfully!");
+                        }
                     }
                     break;
 
@@ -181,6 +190,18 @@ class App {
                         System.out.println("All members in the library:");
                         for (int i = 0; i < allMembers.size(); i++) {
                             System.out.println((i + 1) + ". " + allMembers.get(i).getName() + " (" + allMembers.get(i).getEmail() + ")");
+                        }
+                    }
+                    break;
+
+                case 11:
+                    List<Book> allBooksCheckedOut = library.getBooksCheckedOut();
+                    if (allBooksCheckedOut == null || allBooksCheckedOut.size() == 0) {
+                        System.out.println("No books checked out in the library.");
+                    } else {
+                        System.out.println("All books checked out in the library:");
+                        for (int i = 0; i < allBooksCheckedOut.size(); i++) {
+                            System.out.println((i + 1) + ". " + allBooksCheckedOut.get(i).getTitle() + " by " + allBooksCheckedOut.get(i).getAuthor());
                         }
                     }
                     break;

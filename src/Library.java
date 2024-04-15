@@ -68,4 +68,16 @@ public class Library {
         return members;
     }
 
+    public List<Book> getBooksCheckedOut() {
+        List<Book> checkedOutBooks = new ArrayList<>();
+        for (Member member : members) {
+            if (member.getBorrowedBooks().size() > 0) {
+                System.out.println(member.getName() + " has the following books checked out:");
+                for (Book book : member.getBorrowedBooks()) {
+                    System.out.println(book.getTitle());
+                }
+            }
+        }
+        return checkedOutBooks;
+    }
 }
