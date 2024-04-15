@@ -1,5 +1,9 @@
+import java.util.List;
+
 class App {
     public static void main(String[] args) {
+        Library library = new Library();
+
         System.out.println("==========================================================");
         System.out.println("    ____        _     __   ____              __       ");
         System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
@@ -59,7 +63,51 @@ class App {
                 case 4:
                     System.out.print("Enter the name of the member you want to remove: ");
                     String memberName = System.console().readLine();
-                    System.out.print("Searching for member {0} in database.", memberName);
+                    System.out.print("Searching for member '" + memberName + "' in the system.");
+                    List<Member> searchResultsMembers = library.searchMembers(memberName);
+                    if (searchResultsMembers.size() == 0) {
+                        System.out.println("No members found with the name: " + memberName);
+                    } else {
+                        System.out.println("Select the member you want to remove:");
+                        for (int i = 0; i < searchResultsMembers.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsMembers.get(i).getName() + " (" + searchResultsMembers.get(i).getEmail() + ")");
+                        }
+                        int memberIndex = Integer.parseInt(System.console().readLine());
+                        library.removeMember(searchResultsMembers.get(memberIndex - 1));
+                        System.out.println("Member removed successfully!");
+                    }
+                    break;
+                case 5:
+                    System.out.print("Enter the title of the book you want to search: ");
+                    String searchTitle = System.console().readLine();
+                    List<Book> searchResultsBooks = library.searchBooks(searchTitle);
+                    if (searchResultsBooks.size() == 0) {
+                        System.out.println("No books found with the title: " + searchTitle);
+                    } else {
+                        System.out.println("Search results:");
+                        for (int i = 0; i < searchResultsBooks.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsBooks.get(i).getTitle() + " by " + searchResultsBooks.get(i).getAuthor());
+                        }
+                    }
+                    break;
+                case 6:
+                    System.out.print("Enter the name of the member you want to search: ");
+                    String searchName = System.console().readLine();
+                    List<Member> searchResultsMembersS = library.searchMembers(searchName);
+                    if (searchResultsMembersS.size() == 0) {
+                        System.out.println("No members found with the name: " + searchName);
+                    } else {
+                        System.out.println("Search results:");
+                        for (int i = 0; i < searchResultsMembersS.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsMembersS.get(i).getName() + " (" + searchResultsMembersS.get(i).getEmail() + ")");
+                        }
+                    }
+                    break;
+                case 7:
+                    System.out.println("Thank you for using the Library Management System!");
+                    System.exit(0);
+                
+            }
         }
     }
 }
