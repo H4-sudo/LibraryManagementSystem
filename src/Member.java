@@ -27,11 +27,11 @@ public class Member {
         if (isValidEmail(email)) {
             this.email = email;
         } else {
-            throw new IllegalArgumentException("Invalid email format");
+            System.out.println("Invalid email format, please try again.");
         }
     }
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }

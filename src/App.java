@@ -91,6 +91,14 @@ class App {
                     System.out.print("Enter the email of the member: ");
                     String email = System.console().readLine();
                     Member member = new Member(name, email);
+                    if (library.getMembers().contains(member)) {
+                        System.out.println("Member already exists in the system.");
+                        break;
+                    }
+                    if (member.isValidEmail(email) == false){
+                        System.out.println("Invalid email format, please try again.");
+                        break;
+                    }
                     library.addMember(member);
                     System.out.println("Member added successfully!\n");
                     System.out.println("==========================================================");
@@ -231,10 +239,16 @@ class App {
                         Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
                         library.returnBook(bookToCheckIn, memberToCheckIn);
                         Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
-                        bookToCheckInRemove.setAvailable(true);
-                        System.out.println("==========================================================");
-                        System.out.println("Book checked in successfully!");
-                        System.out.println("==========================================================");
+                        if (bookToCheckInRemove.isAvailable() == true) {
+                            System.out.println("==========================================================");
+                            System.out.println("Book is already available.");
+                            System.out.println("==========================================================");
+                        } else {
+                            bookToCheckInRemove.setAvailable(true);
+                            System.out.println("==========================================================");
+                            System.out.println("Book checked in successfully!");
+                            System.out.println("==========================================================");
+                        }
                     }
                     break;
 
@@ -254,6 +268,7 @@ class App {
                         for (int i = 0; i < allBooks.size(); i++) {
                             System.out.println((i + 1) + ". " + allBooks.get(i).getTitle() + " by " + allBooks.get(i).getAuthor());
                         }
+                        System.out.println("==========================================================");
                     }
                     break;
                 
@@ -273,6 +288,7 @@ class App {
                         for (int i = 0; i < allMembers.size(); i++) {
                             System.out.println((i + 1) + ". " + allMembers.get(i).getName() + " (" + allMembers.get(i).getEmail() + ")");
                         }
+                        System.out.println("==========================================================");
                     }
                     break;
 
@@ -292,12 +308,14 @@ class App {
                         for (int i = 0; i < allBooksCheckedOut.size(); i++) {
                             System.out.println((i + 1) + ". " + allBooksCheckedOut.get(i).getTitle() + " by " + allBooksCheckedOut.get(i).getAuthor());
                         }
+                        System.out.println("==========================================================");
                     }
                     break;
 
                 case "0":
                     System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
+                    System.out.println("==========================================================");
                     System.exit(0);
                 
             }
