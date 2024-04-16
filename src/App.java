@@ -45,8 +45,11 @@ class App {
             System.out.println("==========================================================");
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(System.console().readLine());
+            RefreshScreen.refresh();
             switch (choice) {
                 case 1:
+                    System.out.println("==========================================================");
+                    System.out.println("Add a Book");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book: ");
                     String title = System.console().readLine();
@@ -60,6 +63,8 @@ class App {
                     System.out.println("==========================================================");
                     break;
                 case 2:
+                    System.out.println("==========================================================");
+                    System.out.println("Remove a Book");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to remove: ");
                     String bookTitle = System.console().readLine();
@@ -79,6 +84,8 @@ class App {
                     break;
                 case 3:
                     System.out.println("==========================================================");
+                    System.out.println("Add a Member");
+                    System.out.println("==========================================================");
                     System.out.print("Enter the name of the member: ");
                     String name = System.console().readLine();
                     System.out.print("Enter the email of the member: ");
@@ -89,6 +96,8 @@ class App {
                     System.out.println("==========================================================");
                     break;
                 case 4:
+                    System.out.println("==========================================================");
+                    System.out.println("Remove a Member");
                     System.out.println("==========================================================");
                     System.out.print("Enter the name of the member you want to remove: ");
                     String memberName = System.console().readLine();
@@ -108,6 +117,8 @@ class App {
                     break;
                 case 5:
                     System.out.println("==========================================================");
+                    System.out.println("Search for Books");
+                    System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to search: ");
                     String searchTitle = System.console().readLine();
                     List<Book> searchResultsBooks = library.searchBooks(searchTitle);
@@ -122,6 +133,8 @@ class App {
                     }
                     break;
                 case 6:
+                    System.out.println("==========================================================");
+                    System.out.println("Search for Members");
                     System.out.println("==========================================================");
                     System.out.print("Enter the name of the member you want to search: ");
                     String searchName = System.console().readLine();
@@ -138,6 +151,9 @@ class App {
                     break;
 
                 case 7:
+                    System.out.println("==========================================================");
+                    System.out.println("Check out a Book");
+                    System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to check out: ");
                     String checkoutTitle = System.console().readLine();
                     List<Book> searchResultsBooksC = library.searchBooks(checkoutTitle);
@@ -169,14 +185,21 @@ class App {
                         Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
                         bookToCheckOutN.setAvailable(false);
                         if (bookToCheckOutN.isAvailable() == false) {
+                            System.out.println("==========================================================");
                             System.out.println("Book is not available.");
+                            System.out.println("==========================================================");
                         } else {
+                            System.out.println("==========================================================");
                             System.out.println("Book checked out successfully!");
+                            System.out.println("==========================================================");
                         }
                     }
                     break;
 
                 case 8:
+                    System.out.println("==========================================================");
+                    System.out.println("Check in a Book");
+                    System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to check in: ");
                     String checkinTitle = System.console().readLine();
                     List<Book> searchResultsBooksI = library.searchBooks(checkinTitle);
@@ -206,16 +229,25 @@ class App {
                         library.returnBook(bookToCheckIn, memberToCheckIn);
                         Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
                         bookToCheckInRemove.setAvailable(true);
+                        System.out.println("==========================================================");
                         System.out.println("Book checked in successfully!");
+                        System.out.println("==========================================================");
                     }
                     break;
 
                 case 9:
+                    System.out.println("==========================================================");
+                    System.out.println("All Books");
+                    System.out.println("==========================================================");
                     List<Book> allBooks = library.getBooks();
                     if (allBooks.size() == 0) {
+                        System.out.println("==========================================================");
                         System.out.println("No books found in the library.");
+                        System.out.println("==========================================================");
                     } else {
+                        System.out.println("==========================================================");
                         System.out.println("All books in the library:");
+                        System.out.println("==========================================================");
                         for (int i = 0; i < allBooks.size(); i++) {
                             System.out.println((i + 1) + ". " + allBooks.get(i).getTitle() + " by " + allBooks.get(i).getAuthor());
                         }
@@ -223,11 +255,18 @@ class App {
                     break;
                 
                 case 10:
+                    System.out.println("==========================================================");
+                    System.out.println("All Members");
+                    System.out.println("==========================================================");
                     List<Member> allMembers = library.getMembers();
                     if (allMembers.size() == 0) {
+                        System.out.println("==========================================================");
                         System.out.println("No members found in the library.");
+                        System.out.println("==========================================================");
                     } else {
+                        System.out.println("==========================================================");
                         System.out.println("All members in the library:");
+                        System.out.println("==========================================================");
                         for (int i = 0; i < allMembers.size(); i++) {
                             System.out.println((i + 1) + ". " + allMembers.get(i).getName() + " (" + allMembers.get(i).getEmail() + ")");
                         }
@@ -235,11 +274,18 @@ class App {
                     break;
 
                 case 11:
+                    System.out.println("==========================================================");
+                    System.out.println("All Books Checked Out");
+                    System.out.println("==========================================================");
                     List<Book> allBooksCheckedOut = library.getBooksCheckedOut();
                     if (allBooksCheckedOut == null || allBooksCheckedOut.size() == 0) {
+                        System.out.println("==========================================================");
                         System.out.println("No books checked out in the library.");
+                        System.out.println("==========================================================");
                     } else {
+                        System.out.println("==========================================================");
                         System.out.println("All books checked out in the library:");
+                        System.out.println("==========================================================");
                         for (int i = 0; i < allBooksCheckedOut.size(); i++) {
                             System.out.println((i + 1) + ". " + allBooksCheckedOut.get(i).getTitle() + " by " + allBooksCheckedOut.get(i).getAuthor());
                         }
@@ -247,6 +293,7 @@ class App {
                     break;
 
                 case 0:
+                    System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
                     System.exit(0);
                 
