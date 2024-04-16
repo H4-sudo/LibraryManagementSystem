@@ -47,6 +47,7 @@ class App {
             int choice = Integer.parseInt(System.console().readLine());
             switch (choice) {
                 case 1:
+                    System.out.println("==========================================================");
                     System.out.print("Enter the title of the book: ");
                     String title = System.console().readLine();
                     System.out.print("Enter the author of the book: ");
@@ -56,8 +57,10 @@ class App {
                     Book book = new Book(title, author, ISBN);
                     library.addBook(book);
                     System.out.println("Book added successfully!\n");
+                    System.out.println("==========================================================");
                     break;
                 case 2:
+                    System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to remove: ");
                     String bookTitle = System.console().readLine();
                     List<Book> searchResults = library.searchBooks(bookTitle);
@@ -71,9 +74,11 @@ class App {
                         int bookIndex = Integer.parseInt(System.console().readLine());
                         library.removeBook(searchResults.get(bookIndex - 1));
                         System.out.println("Book removed successfully!");
+                        System.out.println("==========================================================");
                     }
                     break;
                 case 3:
+                    System.out.println("==========================================================");
                     System.out.print("Enter the name of the member: ");
                     String name = System.console().readLine();
                     System.out.print("Enter the email of the member: ");
@@ -81,8 +86,10 @@ class App {
                     Member member = new Member(name, email);
                     library.addMember(member);
                     System.out.println("Member added successfully!\n");
+                    System.out.println("==========================================================");
                     break;
                 case 4:
+                    System.out.println("==========================================================");
                     System.out.print("Enter the name of the member you want to remove: ");
                     String memberName = System.console().readLine();
                     System.out.print("Searching for member '" + memberName + "' in the system.");
@@ -100,6 +107,7 @@ class App {
                     }
                     break;
                 case 5:
+                    System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to search: ");
                     String searchTitle = System.console().readLine();
                     List<Book> searchResultsBooks = library.searchBooks(searchTitle);
@@ -109,10 +117,12 @@ class App {
                         System.out.println("Search results:");
                         for (int i = 0; i < searchResultsBooks.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResultsBooks.get(i).getTitle() + " by " + searchResultsBooks.get(i).getAuthor());
+                            System.out.println("\n==========================================================");
                         }
                     }
                     break;
                 case 6:
+                    System.out.println("==========================================================");
                     System.out.print("Enter the name of the member you want to search: ");
                     String searchName = System.console().readLine();
                     List<Member> searchResultsMembersS = library.searchMembers(searchName);
@@ -121,7 +131,8 @@ class App {
                     } else {
                         System.out.println("Search results:");
                         for (int i = 0; i < searchResultsMembersS.size(); i++) {
-                            System.out.println((i + 1) + ". " + searchResultsMembersS.get(i).getName() + " (" + searchResultsMembersS.get(i).getEmail() + ")");
+                            System.out.println((i + 1) + ". " + searchResultsMembersS.get(i).getName() + " (" + searchResultsMembersS.get(i).getEmail() + ")\n");
+                            System.out.println("==========================================================");
                         }
                     }
                     break;
