@@ -11,7 +11,15 @@ class App {
      */
     public static void main(String[] args) {
         Library library = new Library();
-
+        library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
+        library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
+        library.addBook(new Book("1984", "George Orwell", "9780451524935"));
+        library.addBook(new Book("Pride and Prejudice", "Jane Austen", "9780679783268"));
+        library.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "9780316769488"));
+        library.addMember(new Member("Jake Blake", "jake@email.co"));
+        library.addMember(new Member("Emma Smith", "esmith@icould.co"));
+        library.addMember(new Member("John Doe", "jdoe@mymail.co"));
+        library.addMember(new Member("Jane Doe", "janed@themail.co"));
         System.out.println("==========================================================");
         System.out.println("    ____        _     __   ____              __       ");
         System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
@@ -34,6 +42,7 @@ class App {
             System.out.println("10. View all members");
             System.out.println("11. View all books checked out");
             System.out.println("0. Exit");
+            System.out.println("==========================================================");
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(System.console().readLine());
             switch (choice) {
@@ -46,7 +55,7 @@ class App {
                     String ISBN = System.console().readLine();
                     Book book = new Book(title, author, ISBN);
                     library.addBook(book);
-                    System.out.println("Book added successfully!");
+                    System.out.println("Book added successfully!\n");
                     break;
                 case 2:
                     System.out.print("Enter the title of the book you want to remove: ");
@@ -55,7 +64,7 @@ class App {
                     if (searchResults.size() == 0) {
                         System.out.println("No books found with the title: " + bookTitle);
                     } else {
-                        System.out.println("Select the book you want to remove:");
+                        System.out.println("Select the book you want to remove: ");
                         for (int i = 0; i < searchResults.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResults.get(i).getTitle() + " by " + searchResults.get(i).getAuthor());
                         }
@@ -71,7 +80,7 @@ class App {
                     String email = System.console().readLine();
                     Member member = new Member(name, email);
                     library.addMember(member);
-                    System.out.println("Member added successfully!");
+                    System.out.println("Member added successfully!\n");
                     break;
                 case 4:
                     System.out.print("Enter the name of the member you want to remove: ");
@@ -141,10 +150,17 @@ class App {
                             for (int i = 0; i < searchResultsMembersC.size(); i++) {
                                 System.out.println((i + 1) + ". " + searchResultsMembersC.get(i).getName() + " (" + searchResultsMembersC.get(i).getEmail() + ")");
                             }
+                        }
                         int memberIndexC = Integer.parseInt(System.console().readLine());
                         Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
                         library.lendBook(bookToCheckOut, memberToCheckOut);
-                        System.out.println("Book checked out successfully!");
+                        library.getBooksCheckedOut().add(bookToCheckOut);
+                        Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
+                        bookToCheckOutN.setAvailable(false);
+                        if (bookToCheckOutN.isAvailable() == false) {
+                            System.out.println("Book is not available.");
+                        } else {
+                            System.out.println("Book checked out successfully!");
                         }
                     }
                     break;
@@ -163,9 +179,22 @@ class App {
                         System.out.print("Enter the index of the book you want to check in: ");
                         int bookIndexI = Integer.parseInt(System.console().readLine());
                         Book bookToCheckIn = searchResultsBooksI.get(bookIndexI - 1);
-                        
-                        Member memberToCheckIn = new Member("", ""); // Initialize memberToCheckIn with a valid value
+                        System.out.print("Enter the name of the member: ");
+                        String memberNameI = System.console().readLine();
+                        List<Member> searchResultsMembersI = library.searchMembers(memberNameI);
+                        if (searchResultsMembersI.size() == 0) {
+                            System.out.println("No members found with the name: " + memberNameI);
+                        } else {
+                            System.out.println("Select the member you want to check in the book:");
+                            for (int i = 0; i < searchResultsMembersI.size(); i++) {
+                                System.out.println((i + 1) + ". " + searchResultsMembersI.get(i).getName() + " (" + searchResultsMembersI.get(i).getEmail() + ")");
+                            }
+                        }
+                        int memberIndexI = Integer.parseInt(System.console().readLine());
+                        Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
                         library.returnBook(bookToCheckIn, memberToCheckIn);
+                        Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
+                        bookToCheckInRemove.setAvailable(true);
                         System.out.println("Book checked in successfully!");
                     }
                     break;
