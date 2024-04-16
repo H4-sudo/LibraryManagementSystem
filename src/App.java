@@ -53,10 +53,22 @@ class App {
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book: ");
                     String title = System.console().readLine();
+                    if (title.isEmpty()) {
+                        System.out.println("Title cannot be empty.");
+                        break;
+                    }
                     System.out.print("Enter the author of the book: ");
                     String author = System.console().readLine();
+                    if (author.isEmpty()) {
+                        System.out.println("Author cannot be empty.");
+                        break;
+                    }
                     System.out.print("Enter the ISBN of the book: ");
                     String ISBN = System.console().readLine();
+                    if (ISBN.isEmpty()) {
+                        System.out.println("ISBN cannot be empty.");
+                        break;
+                    }
                     Book book = new Book(title, author, ISBN);
                     library.addBook(book);
                     System.out.println("Book added successfully!\n");
