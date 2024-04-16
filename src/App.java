@@ -44,10 +44,10 @@ class App {
             System.out.println("0. Exit");
             System.out.println("==========================================================");
             System.out.print("Enter your choice: ");
-            int choice = Integer.parseInt(System.console().readLine());
+            String choice = System.console().readLine();
             RefreshScreen.refresh();
             switch (choice) {
-                case 1:
+                case "1":
                     System.out.println("==========================================================");
                     System.out.println("Add a Book");
                     System.out.println("==========================================================");
@@ -62,7 +62,7 @@ class App {
                     System.out.println("Book added successfully!\n");
                     System.out.println("==========================================================");
                     break;
-                case 2:
+                case "2":
                     System.out.println("==========================================================");
                     System.out.println("Remove a Book");
                     System.out.println("==========================================================");
@@ -82,7 +82,7 @@ class App {
                         System.out.println("==========================================================");
                     }
                     break;
-                case 3:
+                case "3":
                     System.out.println("==========================================================");
                     System.out.println("Add a Member");
                     System.out.println("==========================================================");
@@ -95,7 +95,7 @@ class App {
                     System.out.println("Member added successfully!\n");
                     System.out.println("==========================================================");
                     break;
-                case 4:
+                case "4":
                     System.out.println("==========================================================");
                     System.out.println("Remove a Member");
                     System.out.println("==========================================================");
@@ -113,9 +113,10 @@ class App {
                         int memberIndex = Integer.parseInt(System.console().readLine());
                         library.removeMember(searchResultsMembers.get(memberIndex - 1));
                         System.out.println("Member removed successfully!");
+                        System.out.println("==========================================================");
                     }
                     break;
-                case 5:
+                case "5":
                     System.out.println("==========================================================");
                     System.out.println("Search for Books");
                     System.out.println("==========================================================");
@@ -132,7 +133,7 @@ class App {
                         }
                     }
                     break;
-                case 6:
+                case "6":
                     System.out.println("==========================================================");
                     System.out.println("Search for Members");
                     System.out.println("==========================================================");
@@ -150,7 +151,7 @@ class App {
                     }
                     break;
 
-                case 7:
+                case "7":
                     System.out.println("==========================================================");
                     System.out.println("Check out a Book");
                     System.out.println("==========================================================");
@@ -178,6 +179,7 @@ class App {
                                 System.out.println((i + 1) + ". " + searchResultsMembersC.get(i).getName() + " (" + searchResultsMembersC.get(i).getEmail() + ")");
                             }
                         }
+                        System.out.print("Enter the index of the member you want to check out the book: ");
                         int memberIndexC = Integer.parseInt(System.console().readLine());
                         Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
                         library.lendBook(bookToCheckOut, memberToCheckOut);
@@ -196,7 +198,7 @@ class App {
                     }
                     break;
 
-                case 8:
+                case "8":
                     System.out.println("==========================================================");
                     System.out.println("Check in a Book");
                     System.out.println("==========================================================");
@@ -224,6 +226,7 @@ class App {
                                 System.out.println((i + 1) + ". " + searchResultsMembersI.get(i).getName() + " (" + searchResultsMembersI.get(i).getEmail() + ")");
                             }
                         }
+                        System.out.println("Enter the index of the member you want to check in the book: ");
                         int memberIndexI = Integer.parseInt(System.console().readLine());
                         Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
                         library.returnBook(bookToCheckIn, memberToCheckIn);
@@ -235,7 +238,7 @@ class App {
                     }
                     break;
 
-                case 9:
+                case "9":
                     System.out.println("==========================================================");
                     System.out.println("All Books");
                     System.out.println("==========================================================");
@@ -254,7 +257,7 @@ class App {
                     }
                     break;
                 
-                case 10:
+                case "10":
                     System.out.println("==========================================================");
                     System.out.println("All Members");
                     System.out.println("==========================================================");
@@ -273,7 +276,7 @@ class App {
                     }
                     break;
 
-                case 11:
+                case "11":
                     System.out.println("==========================================================");
                     System.out.println("All Books Checked Out");
                     System.out.println("==========================================================");
@@ -292,7 +295,7 @@ class App {
                     }
                     break;
 
-                case 0:
+                case "0":
                     System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
                     System.exit(0);
