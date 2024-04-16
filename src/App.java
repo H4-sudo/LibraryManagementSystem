@@ -20,16 +20,16 @@ class App {
         library.addMember(new Member("Emma Smith", "esmith@icould.co"));
         library.addMember(new Member("John Doe", "jdoe@mymail.co"));
         library.addMember(new Member("Jane Doe", "janed@themail.co"));
-        System.out.println("==========================================================");
-        System.out.println("    ____        _     __   ____              __       ");
-        System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
-        System.out.println("  / /_/ / __ `/ / __  /  / __  / __ \\/ __ \\/ //_/ ___/");
-        System.out.println(" / _, _/ /_/ / / /_/ /  / /_/ / /_/ / /_/ / ,< (__  ) ");
-        System.out.println("/_/ |_|\\__,_/_/\\__,_/  /_____/\\____/\\____/_/|_/____/  ");
-        System.out.println("                                                      ");
-        System.out.println("==========================================================");
-        System.out.println("Welcome to the Library Management System! How can we help you today?");
         while (true) {
+            System.out.println("==========================================================");
+            System.out.println("    ____        _     __   ____              __       ");
+            System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
+            System.out.println("  / /_/ / __ `/ / __  /  / __  / __ \\/ __ \\/ //_/ ___/");
+            System.out.println(" / _, _/ /_/ / / /_/ /  / /_/ / /_/ / /_/ / ,< (__  ) ");
+            System.out.println("/_/ |_|\\__,_/_/\\__,_/  /_____/\\____/\\____/_/|_/____/  ");
+            System.out.println("                                                      ");
+            System.out.println("==========================================================");
+            System.out.println("Welcome to the Library Management System! How can we help you today?");
             System.out.println("1. Add a book");
             System.out.println("2. Remove a book");
             System.out.println("3. Add a member");
