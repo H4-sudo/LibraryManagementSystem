@@ -24,6 +24,7 @@ class App {
         library.addMember(new Member("John Doe", "jdoe@mymail.co"));
         library.addMember(new Member("Jane Doe", "janed@themail.co"));
         while (true) {
+            RefreshScreen.refresh();
             // This is the main menu of the Library Management System
             System.out.println("==========================================================");
             System.out.println("    ____        _     __   ____              __       ");
@@ -76,8 +77,11 @@ class App {
                     }
                     Book book = new Book(title, author, ISBN);
                     library.addBook(book);
+                    book.setAvailable(true);
                     System.out.println("Book added successfully!\n");
                     System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.console().readLine();
                     break;
 
                 case "2":
@@ -95,10 +99,16 @@ class App {
                         for (int i = 0; i < searchResults.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResults.get(i).getTitle() + " by " + searchResults.get(i).getAuthor());
                         }
-                        int bookIndex = Integer.parseInt(System.console().readLine());
-                        library.removeBook(searchResults.get(bookIndex - 1));
-                        System.out.println("Book removed successfully!");
-                        System.out.println("==========================================================");
+                        try {
+                            int bookIndex = Integer.parseInt(System.console().readLine());
+                            library.removeBook(searchResults.get(bookIndex - 1));
+                            System.out.println("Book removed successfully!");
+                            System.out.println("==========================================================");
+                            System.out.println("Press Enter to continue...");
+                            System.console().readLine();
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
+                        }
                     }
                     break;
 
@@ -123,6 +133,8 @@ class App {
                     library.addMember(member);
                     System.out.println("Member added successfully!\n");
                     System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.console().readLine();
                     break;
 
                 case "4":
@@ -141,10 +153,16 @@ class App {
                         for (int i = 0; i < searchResultsMembers.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResultsMembers.get(i).getName() + " (" + searchResultsMembers.get(i).getEmail() + ")");
                         }
-                        int memberIndex = Integer.parseInt(System.console().readLine());
-                        library.removeMember(searchResultsMembers.get(memberIndex - 1));
-                        System.out.println("Member removed successfully!");
-                        System.out.println("==========================================================");
+                        try {
+                            int memberIndex = Integer.parseInt(System.console().readLine());
+                            library.removeMember(searchResultsMembers.get(memberIndex - 1));
+                            System.out.println("Member removed successfully!");
+                            System.out.println("==========================================================");
+                            System.out.println("Press Enter to continue...");
+                            System.console().readLine();
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
+                        }
                     }
                     break;
 
@@ -158,12 +176,17 @@ class App {
                     List<Book> searchResultsBooks = library.searchBooks(searchTitle);
                     if (searchResultsBooks.size() == 0) {
                         System.out.println("No books found with the title: " + searchTitle);
+                        System.out.println("==========================================================");
+                        System.out.println("Press Enter to continue...");
+                        System.console().readLine();
                     } else {
                         System.out.println("Search results:");
                         for (int i = 0; i < searchResultsBooks.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResultsBooks.get(i).getTitle() + " by " + searchResultsBooks.get(i).getAuthor());
                             System.out.println("\n==========================================================");
                         }
+                        System.out.println("Press Enter to continue...");
+                        System.console().readLine();
                     }
                     break;
 
@@ -183,6 +206,8 @@ class App {
                             System.out.println((i + 1) + ". " + searchResultsMembersS.get(i).getName() + " (" + searchResultsMembersS.get(i).getEmail() + ")\n");
                             System.out.println("==========================================================");
                         }
+                        System.out.println("Press Enter to continue...");
+                        System.console().readLine();
                     }
                     break;
 
@@ -201,35 +226,43 @@ class App {
                         for (int i = 0; i < searchResultsBooksC.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResultsBooksC.get(i).getTitle() + " by " + searchResultsBooksC.get(i).getAuthor());
                         }
-                        System.out.print("Enter the index of the book you want to check out: ");
-                        int bookIndexC = Integer.parseInt(System.console().readLine());
-                        Book bookToCheckOut = searchResultsBooksC.get(bookIndexC - 1);
-                        System.out.print("Enter the name of the member: ");
-                        String memberNameC = System.console().readLine();
-                        List<Member> searchResultsMembersC = library.searchMembers(memberNameC);
-                        if (searchResultsMembersC.size() == 0) {
-                            System.out.println("No members found with the name: " + memberNameC);
-                        } else {
-                            System.out.println("Select the member you want to check out the book:");
-                            for (int i = 0; i < searchResultsMembersC.size(); i++) {
-                                System.out.println((i + 1) + ". " + searchResultsMembersC.get(i).getName() + " (" + searchResultsMembersC.get(i).getEmail() + ")");
+                        try {
+                            System.out.print("Enter the index of the book you want to check out: ");
+                            int bookIndexC = Integer.parseInt(System.console().readLine());
+                            Book bookToCheckOut = searchResultsBooksC.get(bookIndexC - 1);
+                            System.out.print("Enter the name of the member: ");
+                            String memberNameC = System.console().readLine();
+                            List<Member> searchResultsMembersC = library.searchMembers(memberNameC);
+                            if (searchResultsMembersC.size() == 0) {
+                                System.out.println("No members found with the name: " + memberNameC);
+                            } else {
+                                System.out.println("Select the member you want to check out the book:");
+                                for (int i = 0; i < searchResultsMembersC.size(); i++) {
+                                    System.out.println((i + 1) + ". " + searchResultsMembersC.get(i).getName() + " (" + searchResultsMembersC.get(i).getEmail() + ")");
+                                }
                             }
-                        }
-                        System.out.print("Enter the index of the member you want to check out the book: ");
-                        int memberIndexC = Integer.parseInt(System.console().readLine());
-                        Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
-                        library.lendBook(bookToCheckOut, memberToCheckOut);
-                        library.getBooksCheckedOut().add(bookToCheckOut);
-                        Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
-                        bookToCheckOutN.setAvailable(false);
-                        if (bookToCheckOutN.isAvailable() == false) {
-                            System.out.println("==========================================================");
-                            System.out.println("Book is not available.");
-                            System.out.println("==========================================================");
-                        } else {
-                            System.out.println("==========================================================");
-                            System.out.println("Book checked out successfully!");
-                            System.out.println("==========================================================");
+                            System.out.print("Enter the index of the member you want to check out the book: ");
+                            int memberIndexC = Integer.parseInt(System.console().readLine());
+                            Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
+                            library.lendBook(bookToCheckOut, memberToCheckOut);
+                            library.getBooksCheckedOut().add(bookToCheckOut);
+                            Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
+                            bookToCheckOutN.setAvailable(false);
+                            if (bookToCheckOutN.isAvailable() == false) {
+                                System.out.println("==========================================================");
+                                System.out.println("Book is not available.");
+                                System.out.println("==========================================================");
+                                System.out.println("Press Enter to continue...");
+                                System.console().readLine();
+                            } else {
+                                System.out.println("==========================================================");
+                                System.out.println("Book checked out successfully!");
+                                System.out.println("==========================================================");
+                                System.out.println("Press Enter to continue...");
+                                System.console().readLine();
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
                         }
                     }
                     break;
@@ -247,36 +280,48 @@ class App {
                     } else {
                         System.out.println("Select the book you want to check in:");
                         for (int i = 0; i < searchResultsBooksI.size(); i++) {
-                            System.out.println((i + 1) + ". " + searchResultsBooksI.get(i).getTitle() + " by " + searchResultsBooksI.get(i).getAuthor());
-                        }
-                        System.out.print("Enter the index of the book you want to check in: ");
-                        int bookIndexI = Integer.parseInt(System.console().readLine());
-                        Book bookToCheckIn = searchResultsBooksI.get(bookIndexI - 1);
-                        System.out.print("Enter the name of the member: ");
-                        String memberNameI = System.console().readLine();
-                        List<Member> searchResultsMembersI = library.searchMembers(memberNameI);
-                        if (searchResultsMembersI.size() == 0) {
-                            System.out.println("No members found with the name: " + memberNameI);
-                        } else {
-                            System.out.println("Select the member you want to check in the book:");
-                            for (int i = 0; i < searchResultsMembersI.size(); i++) {
-                                System.out.println((i + 1) + ". " + searchResultsMembersI.get(i).getName() + " (" + searchResultsMembersI.get(i).getEmail() + ")");
+                            Book bookCI = searchResultsBooksI.get(i);
+                            if (!bookCI.isAvailable()) {
+                                System.out.println((i + 1) + ". " + searchResultsBooksI.get(i).getTitle() + " by " + searchResultsBooksI.get(i).getAuthor());
                             }
                         }
-                        System.out.println("Enter the index of the member you want to check in the book: ");
-                        int memberIndexI = Integer.parseInt(System.console().readLine());
-                        Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
-                        library.returnBook(bookToCheckIn, memberToCheckIn);
-                        Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
-                        if (bookToCheckInRemove.isAvailable() == true) {
-                            System.out.println("==========================================================");
-                            System.out.println("Book is already available.");
-                            System.out.println("==========================================================");
-                        } else {
-                            bookToCheckInRemove.setAvailable(true);
-                            System.out.println("==========================================================");
-                            System.out.println("Book checked in successfully!");
-                            System.out.println("==========================================================");
+                        try {
+                            System.out.print("Enter the index of the book you want to check in: ");
+                            int bookIndexI = Integer.parseInt(System.console().readLine());
+                            Book bookToCheckIn = searchResultsBooksI.get(bookIndexI - 1);
+                            System.out.print("Enter the name of the member: ");
+                            String memberNameI = System.console().readLine();
+                            List<Member> searchResultsMembersI = library.searchMembers(memberNameI);
+                            if (searchResultsMembersI.size() == 0) {
+                                System.out.println("No members found with the name: " + memberNameI);
+                            } else {
+                                System.out.println("Select the member you want to check in the book:");
+                                for (int i = 0; i < searchResultsMembersI.size(); i++) {
+                                    System.out.println((i + 1) + ". " + searchResultsMembersI.get(i).getName() + " (" + searchResultsMembersI.get(i).getEmail() + ")");
+                                }
+                            }
+                            System.out.println("Enter the index of the member you want to check in the book: ");
+                            int memberIndexI = Integer.parseInt(System.console().readLine());
+                            Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
+                            library.returnBook(bookToCheckIn, memberToCheckIn);
+                            Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
+                            if (bookToCheckInRemove.isAvailable() == true) {
+                                System.out.println("==========================================================");
+                                System.out.println("Book is already available.");
+                                System.out.println("==========================================================");
+                                System.out.println("Press Enter to continue...");
+                                System.console().readLine();
+                            } else {
+                                bookToCheckInRemove.setAvailable(true);
+                                System.out.println("==========================================================");
+                                System.out.println("Book checked in successfully!");
+                                System.out.println("==========================================================");
+                                System.out.println("Press Enter to continue...");
+                                System.console().readLine();
+
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
                         }
                     }
                     break;
@@ -298,8 +343,11 @@ class App {
                         for (int i = 0; i < allBooks.size(); i++) {
                             System.out.println((i + 1) + ". " + allBooks.get(i).getTitle() + " by " + allBooks.get(i).getAuthor());
                         }
-                        System.out.println("==========================================================");
                     }
+                    System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.out.println("==========================================================");
+                    System.console().readLine();
                     break;
                 
                 case "10":
@@ -319,8 +367,11 @@ class App {
                         for (int i = 0; i < allMembers.size(); i++) {
                             System.out.println((i + 1) + ". " + allMembers.get(i).getName() + " (" + allMembers.get(i).getEmail() + ")");
                         }
-                        System.out.println("==========================================================");
                     }
+                    System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.out.println("==========================================================");
+                    System.console().readLine();
                     break;
 
                 case "11":
@@ -340,8 +391,11 @@ class App {
                         for (int i = 0; i < allBooksCheckedOut.size(); i++) {
                             System.out.println((i + 1) + ". " + allBooksCheckedOut.get(i).getTitle() + " by " + allBooksCheckedOut.get(i).getAuthor());
                         }
-                        System.out.println("==========================================================");
                     }
+                    System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.out.println("==========================================================");
+                    System.console().readLine();
                     break;
 
                 case "0":
