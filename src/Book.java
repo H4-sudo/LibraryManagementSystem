@@ -13,6 +13,7 @@ public class Book {
         this.isAvailable = true; // This sets books available by default.
     }
 
+    // Getters and Setters for the Book class
     public String getTitle() {
         return title;
     }

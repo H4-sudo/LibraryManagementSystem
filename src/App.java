@@ -10,7 +10,10 @@ class App {
      * @param args The command-line arguments passed to the application.
      */
     public static void main(String[] args) {
+        // Create a new Library object
         Library library = new Library();
+
+        // Add some initial books and members to the library
         library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
         library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
         library.addBook(new Book("1984", "George Orwell", "9780451524935"));
@@ -21,6 +24,7 @@ class App {
         library.addMember(new Member("John Doe", "jdoe@mymail.co"));
         library.addMember(new Member("Jane Doe", "janed@themail.co"));
         while (true) {
+            // This is the main menu of the Library Management System
             System.out.println("==========================================================");
             System.out.println("    ____        _     __   ____              __       ");
             System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
@@ -48,6 +52,7 @@ class App {
             RefreshScreen.refresh();
             switch (choice) {
                 case "1":
+                    // This is the switch case for adding extra books to the library
                     System.out.println("==========================================================");
                     System.out.println("Add a Book");
                     System.out.println("==========================================================");
@@ -74,7 +79,9 @@ class App {
                     System.out.println("Book added successfully!\n");
                     System.out.println("==========================================================");
                     break;
+
                 case "2":
+                    // This is the switch case for removing books from the library
                     System.out.println("==========================================================");
                     System.out.println("Remove a Book");
                     System.out.println("==========================================================");
@@ -94,7 +101,9 @@ class App {
                         System.out.println("==========================================================");
                     }
                     break;
+
                 case "3":
+                    // This is the switch case for adding extra members to the library
                     System.out.println("==========================================================");
                     System.out.println("Add a Member");
                     System.out.println("==========================================================");
@@ -115,7 +124,9 @@ class App {
                     System.out.println("Member added successfully!\n");
                     System.out.println("==========================================================");
                     break;
+
                 case "4":
+                    // This is the switch case for removing members from the library
                     System.out.println("==========================================================");
                     System.out.println("Remove a Member");
                     System.out.println("==========================================================");
@@ -136,7 +147,9 @@ class App {
                         System.out.println("==========================================================");
                     }
                     break;
+
                 case "5":
+                    // This is the switch case for searching for books in the library
                     System.out.println("==========================================================");
                     System.out.println("Search for Books");
                     System.out.println("==========================================================");
@@ -153,7 +166,9 @@ class App {
                         }
                     }
                     break;
+
                 case "6":
+                    // This is the switch case for searching for members in the library
                     System.out.println("==========================================================");
                     System.out.println("Search for Members");
                     System.out.println("==========================================================");
@@ -172,6 +187,7 @@ class App {
                     break;
 
                 case "7":
+                    // This is the switch case for checking out books from the library
                     System.out.println("==========================================================");
                     System.out.println("Check out a Book");
                     System.out.println("==========================================================");
@@ -219,6 +235,7 @@ class App {
                     break;
 
                 case "8":
+                    // This is the switch case for checking in books to the library
                     System.out.println("==========================================================");
                     System.out.println("Check in a Book");
                     System.out.println("==========================================================");
@@ -265,6 +282,7 @@ class App {
                     break;
 
                 case "9":
+                    // This is the switch case for viewing all books in the library
                     System.out.println("==========================================================");
                     System.out.println("All Books");
                     System.out.println("==========================================================");
@@ -285,6 +303,7 @@ class App {
                     break;
                 
                 case "10":
+                    // This is the switch case for viewing all members in the library
                     System.out.println("==========================================================");
                     System.out.println("All Members");
                     System.out.println("==========================================================");
@@ -305,6 +324,7 @@ class App {
                     break;
 
                 case "11":
+                    // This is the switch case for viewing all books checked out in the library
                     System.out.println("==========================================================");
                     System.out.println("All Books Checked Out");
                     System.out.println("==========================================================");
@@ -325,6 +345,7 @@ class App {
                     break;
 
                 case "0":
+                    // This is the switch case for exiting the application
                     System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
                     System.out.println("==========================================================");

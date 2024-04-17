@@ -1,5 +1,6 @@
 import java.io.IOException;
 
+// Class to refresh the screen
 public class RefreshScreen {
     public static void refresh(){
         try {
