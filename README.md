@@ -9,7 +9,7 @@
 
 To use this library management system, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
+1. Clone the repository: `git clone https://github.com/H4-sudo/FA2Java.git`
 2. Open the project in your preferred Java IDE.
 3. Compile and run the `Main` class to start the library management system.
 
