@@ -341,7 +341,7 @@ class App {
                         System.out.println("All books in the library:");
                         System.out.println("==========================================================");
                         for (int i = 0; i < allBooks.size(); i++) {
-                            System.out.println((i + 1) + ". " + allBooks.get(i).getTitle() + " by " + allBooks.get(i).getAuthor());
+                            System.out.println((i + 1) + ". " + allBooks.get(i).getTitle() + " by " + allBooks.get(i).getAuthor() + " (ISBN: " + allBooks.get(i).getISBN() + ") (Available: " + allBooks.get(i).isAvailable() + ")");
                         }
                     }
                     System.out.println("==========================================================");
