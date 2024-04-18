@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="FA2Java">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FA2Java.jar!/" />
+      <root url="jar://$PROJECT_DIR$/HenricoSwanepoel_JD512FA2.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

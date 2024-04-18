@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FA2Java.iml" filepath="$PROJECT_DIR$/FA2Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HenricoSwanepoel_JD512FA2/HenricoSwanepoel_JD512FA2.iml" filepath="$PROJECT_DIR$/HenricoSwanepoel_JD512FA2/HenricoSwanepoel_JD512FA2.iml" />
+    </modules>
+  </component>
+</project>

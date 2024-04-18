@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 class App {
     /**
@@ -12,6 +13,9 @@ class App {
     public static void main(String[] args) {
         // Create a new Library object
         Library library = new Library();
+        
+        Scanner scanner = new Scanner(System.in);
+        String enter;
 
         // Add some initial books and members to the library
         library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
@@ -49,7 +53,7 @@ class App {
             System.out.println("0. Exit");
             System.out.println("==========================================================");
             System.out.print("Enter your choice: ");
-            String choice = System.console().readLine();
+            String choice = scanner.nextLine();
             RefreshScreen.refresh();
             switch (choice) {
                 case "1":
@@ -58,19 +62,19 @@ class App {
                     System.out.println("Add a Book");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book: ");
-                    String title = System.console().readLine();
+                    String title = scanner.nextLine();
                     if (title.isEmpty()) {
                         System.out.println("Title cannot be empty.");
                         break;
                     }
                     System.out.print("Enter the author of the book: ");
-                    String author = System.console().readLine();
+                    String author = scanner.nextLine();
                     if (author.isEmpty()) {
                         System.out.println("Author cannot be empty.");
                         break;
                     }
                     System.out.print("Enter the ISBN of the book: ");
-                    String ISBN = System.console().readLine();
+                    String ISBN = scanner.nextLine();
                     if (ISBN.isEmpty()) {
                         System.out.println("ISBN cannot be empty.");
                         break;
@@ -81,8 +85,12 @@ class App {
                     System.out.println("Book added successfully!\n");
                     System.out.println("==========================================================");
                     System.out.println("Press Enter to continue...");
-                    System.console().readLine();
-                    break;
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
 
                 case "2":
                     // This is the switch case for removing books from the library
@@ -90,9 +98,9 @@ class App {
                     System.out.println("Remove a Book");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to remove: ");
-                    String bookTitle = System.console().readLine();
+                    String bookTitle = scanner.nextLine();
                     List<Book> searchResults = library.searchBooks(bookTitle);
-                    if (searchResults.size() == 0) {
+                    if (searchResults.isEmpty()) {
                         System.out.println("No books found with the title: " + bookTitle);
                     } else {
                         System.out.println("Select the book you want to remove: ");
@@ -100,12 +108,17 @@ class App {
                             System.out.println((i + 1) + ". " + searchResults.get(i).getTitle() + " by " + searchResults.get(i).getAuthor());
                         }
                         try {
-                            int bookIndex = Integer.parseInt(System.console().readLine());
+                            int bookIndex = Integer.parseInt(scanner.next());
                             library.removeBook(searchResults.get(bookIndex - 1));
                             System.out.println("Book removed successfully!");
                             System.out.println("==========================================================");
                             System.out.println("Press Enter to continue...");
-                            System.console().readLine();
+                            enter = scanner.nextLine();
+                            if (enter.isEmpty()) {
+                                break;
+                            } else {
+                                break;
+                            }
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid input. Please enter a valid number.");
                         }
@@ -118,15 +131,15 @@ class App {
                     System.out.println("Add a Member");
                     System.out.println("==========================================================");
                     System.out.print("Enter the name of the member: ");
-                    String name = System.console().readLine();
+                    String name = scanner.nextLine();
                     System.out.print("Enter the email of the member: ");
-                    String email = System.console().readLine();
+                    String email = scanner.nextLine();
                     Member member = new Member(name, email);
                     if (library.getMembers().contains(member)) {
                         System.out.println("Member already exists in the system.");
                         break;
                     }
-                    if (member.isValidEmail(email) == false){
+                    if (!member.isValidEmail(email)){
                         System.out.println("Invalid email format, please try again.");
                         break;
                     }
@@ -134,8 +147,12 @@ class App {
                     System.out.println("Member added successfully!\n");
                     System.out.println("==========================================================");
                     System.out.println("Press Enter to continue...");
-                    System.console().readLine();
-                    break;
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
 
                 case "4":
                     // This is the switch case for removing members from the library
@@ -143,10 +160,10 @@ class App {
                     System.out.println("Remove a Member");
                     System.out.println("==========================================================");
                     System.out.print("Enter the name of the member you want to remove: ");
-                    String memberName = System.console().readLine();
+                    String memberName = scanner.nextLine();
                     System.out.print("Searching for member '" + memberName + "' in the system.");
                     List<Member> searchResultsMembers = library.searchMembers(memberName);
-                    if (searchResultsMembers.size() == 0) {
+                    if (searchResultsMembers.isEmpty()) {
                         System.out.println("No members found with the name: " + memberName);
                     } else {
                         System.out.println("Select the member you want to remove:");
@@ -154,12 +171,17 @@ class App {
                             System.out.println((i + 1) + ". " + searchResultsMembers.get(i).getName() + " (" + searchResultsMembers.get(i).getEmail() + ")");
                         }
                         try {
-                            int memberIndex = Integer.parseInt(System.console().readLine());
+                            int memberIndex = Integer.parseInt(scanner.next());
                             library.removeMember(searchResultsMembers.get(memberIndex - 1));
                             System.out.println("Member removed successfully!");
                             System.out.println("==========================================================");
                             System.out.println("Press Enter to continue...");
-                            System.console().readLine();
+                            enter = scanner.nextLine();
+                            if (enter.isEmpty()) {
+                                break;
+                            } else {
+                                break;
+                            }
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid input. Please enter a valid number.");
                         }
@@ -172,23 +194,25 @@ class App {
                     System.out.println("Search for Books");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to search: ");
-                    String searchTitle = System.console().readLine();
+                    String searchTitle = scanner.nextLine();
                     List<Book> searchResultsBooks = library.searchBooks(searchTitle);
-                    if (searchResultsBooks.size() == 0) {
+                    if (searchResultsBooks.isEmpty()) {
                         System.out.println("No books found with the title: " + searchTitle);
                         System.out.println("==========================================================");
-                        System.out.println("Press Enter to continue...");
-                        System.console().readLine();
                     } else {
                         System.out.println("Search results:");
                         for (int i = 0; i < searchResultsBooks.size(); i++) {
                             System.out.println((i + 1) + ". " + searchResultsBooks.get(i).getTitle() + " by " + searchResultsBooks.get(i).getAuthor());
                             System.out.println("\n==========================================================");
                         }
-                        System.out.println("Press Enter to continue...");
-                        System.console().readLine();
                     }
-                    break;
+                    System.out.println("Press Enter to continue...");
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
 
                 case "6":
                     // This is the switch case for searching for members in the library
@@ -196,9 +220,9 @@ class App {
                     System.out.println("Search for Members");
                     System.out.println("==========================================================");
                     System.out.print("Enter the name of the member you want to search: ");
-                    String searchName = System.console().readLine();
+                    String searchName = scanner.nextLine();
                     List<Member> searchResultsMembersS = library.searchMembers(searchName);
-                    if (searchResultsMembersS.size() == 0) {
+                    if (searchResultsMembersS.isEmpty()) {
                         System.out.println("No members found with the name: " + searchName);
                     } else {
                         System.out.println("Search results:");
@@ -207,9 +231,13 @@ class App {
                             System.out.println("==========================================================");
                         }
                         System.out.println("Press Enter to continue...");
-                        System.console().readLine();
+                        enter = scanner.nextLine();
+                        if (enter.isEmpty()) {
+                            break;
+                        } else {
+                            break;
+                        }
                     }
-                    break;
 
                 case "7":
                     // This is the switch case for checking out books from the library
@@ -217,9 +245,9 @@ class App {
                     System.out.println("Check out a Book");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to check out: ");
-                    String checkoutTitle = System.console().readLine();
+                    String checkoutTitle = scanner.nextLine();
                     List<Book> searchResultsBooksC = library.searchBooks(checkoutTitle);
-                    if (searchResultsBooksC.size() == 0) {
+                    if (searchResultsBooksC.isEmpty()) {
                         System.out.println("No books found with the title: " + checkoutTitle);
                     } else {
                         System.out.println("Select the book you want to check out:");
@@ -228,12 +256,12 @@ class App {
                         }
                         try {
                             System.out.print("Enter the index of the book you want to check out: ");
-                            int bookIndexC = Integer.parseInt(System.console().readLine());
+                            int bookIndexC = Integer.parseInt(scanner.nextLine());
                             Book bookToCheckOut = searchResultsBooksC.get(bookIndexC - 1);
                             System.out.print("Enter the name of the member: ");
-                            String memberNameC = System.console().readLine();
+                            String memberNameC = scanner.nextLine();
                             List<Member> searchResultsMembersC = library.searchMembers(memberNameC);
-                            if (searchResultsMembersC.size() == 0) {
+                            if (searchResultsMembersC.isEmpty()) {
                                 System.out.println("No members found with the name: " + memberNameC);
                             } else {
                                 System.out.println("Select the member you want to check out the book:");
@@ -242,30 +270,39 @@ class App {
                                 }
                             }
                             System.out.print("Enter the index of the member you want to check out the book: ");
-                            int memberIndexC = Integer.parseInt(System.console().readLine());
+                            int memberIndexC = Integer.parseInt(scanner.nextLine());
                             Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
                             library.lendBook(bookToCheckOut, memberToCheckOut);
                             library.getBooksCheckedOut().add(bookToCheckOut);
                             Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
                             bookToCheckOutN.setAvailable(false);
-                            if (bookToCheckOutN.isAvailable() == false) {
+                            if (!bookToCheckOutN.isAvailable()) {
                                 System.out.println("==========================================================");
                                 System.out.println("Book is not available.");
                                 System.out.println("==========================================================");
                                 System.out.println("Press Enter to continue...");
-                                System.console().readLine();
+                                enter = scanner.nextLine();
+                                if (enter.isEmpty()) {
+                                    break;
+                                } else {
+                                    break;
+                                }
                             } else {
                                 System.out.println("==========================================================");
                                 System.out.println("Book checked out successfully!");
                                 System.out.println("==========================================================");
                                 System.out.println("Press Enter to continue...");
-                                System.console().readLine();
+                                enter = scanner.nextLine();
+                                if (enter.isEmpty()) {
+                                    break;
+                                } else {
+                                    break;
+                                }
                             }
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid input. Please enter a valid number.");
                         }
                     }
-                    break;
 
                 case "8":
                     // This is the switch case for checking in books to the library
@@ -273,10 +310,10 @@ class App {
                     System.out.println("Check in a Book");
                     System.out.println("==========================================================");
                     System.out.print("Enter the title of the book you want to check in: ");
-                    String checkinTitle = System.console().readLine();
-                    List<Book> searchResultsBooksI = library.searchBooks(checkinTitle);
-                    if (searchResultsBooksI.size() == 0) {
-                        System.out.println("No books found with the title: " + checkinTitle);
+                    String checkInTitle = scanner.nextLine();
+                    List<Book> searchResultsBooksI = library.searchBooks(checkInTitle);
+                    if (searchResultsBooksI.isEmpty()) {
+                        System.out.println("No books found with the title: " + checkInTitle);
                     } else {
                         System.out.println("Select the book you want to check in:");
                         for (int i = 0; i < searchResultsBooksI.size(); i++) {
@@ -287,12 +324,12 @@ class App {
                         }
                         try {
                             System.out.print("Enter the index of the book you want to check in: ");
-                            int bookIndexI = Integer.parseInt(System.console().readLine());
+                            int bookIndexI = Integer.parseInt(scanner.nextLine());
                             Book bookToCheckIn = searchResultsBooksI.get(bookIndexI - 1);
                             System.out.print("Enter the name of the member: ");
-                            String memberNameI = System.console().readLine();
+                            String memberNameI = scanner.nextLine();
                             List<Member> searchResultsMembersI = library.searchMembers(memberNameI);
-                            if (searchResultsMembersI.size() == 0) {
+                            if (searchResultsMembersI.isEmpty()) {
                                 System.out.println("No members found with the name: " + memberNameI);
                             } else {
                                 System.out.println("Select the member you want to check in the book:");
@@ -301,24 +338,26 @@ class App {
                                 }
                             }
                             System.out.println("Enter the index of the member you want to check in the book: ");
-                            int memberIndexI = Integer.parseInt(System.console().readLine());
+                            int memberIndexI = Integer.parseInt(scanner.next());
                             Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
                             library.returnBook(bookToCheckIn, memberToCheckIn);
                             Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
-                            if (bookToCheckInRemove.isAvailable() == true) {
+                            if (bookToCheckInRemove.isAvailable()) {
                                 System.out.println("==========================================================");
                                 System.out.println("Book is already available.");
-                                System.out.println("==========================================================");
-                                System.out.println("Press Enter to continue...");
-                                System.console().readLine();
                             } else {
                                 bookToCheckInRemove.setAvailable(true);
                                 System.out.println("==========================================================");
                                 System.out.println("Book checked in successfully!");
-                                System.out.println("==========================================================");
-                                System.out.println("Press Enter to continue...");
-                                System.console().readLine();
 
+                            }
+                            System.out.println("==========================================================");
+                            System.out.println("Press Enter to continue...");
+                            enter = scanner.nextLine();
+                            if (enter.isEmpty()) {
+                                break;
+                            } else {
+                                break;
                             }
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid input. Please enter a valid number.");
@@ -332,7 +371,7 @@ class App {
                     System.out.println("All Books");
                     System.out.println("==========================================================");
                     List<Book> allBooks = library.getBooks();
-                    if (allBooks.size() == 0) {
+                    if (allBooks.isEmpty()) {
                         System.out.println("==========================================================");
                         System.out.println("No books found in the library.");
                         System.out.println("==========================================================");
@@ -347,8 +386,12 @@ class App {
                     System.out.println("==========================================================");
                     System.out.println("Press Enter to continue...");
                     System.out.println("==========================================================");
-                    System.console().readLine();
-                    break;
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
                 
                 case "10":
                     // This is the switch case for viewing all members in the library
@@ -356,7 +399,7 @@ class App {
                     System.out.println("All Members");
                     System.out.println("==========================================================");
                     List<Member> allMembers = library.getMembers();
-                    if (allMembers.size() == 0) {
+                    if (allMembers.isEmpty()) {
                         System.out.println("==========================================================");
                         System.out.println("No members found in the library.");
                         System.out.println("==========================================================");
@@ -371,8 +414,12 @@ class App {
                     System.out.println("==========================================================");
                     System.out.println("Press Enter to continue...");
                     System.out.println("==========================================================");
-                    System.console().readLine();
-                    break;
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
 
                 case "11":
                     // This is the switch case for viewing all books checked out in the library
@@ -380,7 +427,7 @@ class App {
                     System.out.println("All Books Checked Out");
                     System.out.println("==========================================================");
                     List<Book> allBooksCheckedOut = library.getBooksCheckedOut();
-                    if (allBooksCheckedOut == null || allBooksCheckedOut.size() == 0) {
+                    if (allBooksCheckedOut == null || allBooksCheckedOut.isEmpty()) {
                         System.out.println("==========================================================");
                         System.out.println("No books checked out in the library.");
                         System.out.println("==========================================================");
@@ -395,11 +442,16 @@ class App {
                     System.out.println("==========================================================");
                     System.out.println("Press Enter to continue...");
                     System.out.println("==========================================================");
-                    System.console().readLine();
-                    break;
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
 
                 case "0":
                     // This is the switch case for exiting the application
+                    scanner.close();
                     System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
                     System.out.println("==========================================================");
