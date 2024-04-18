@@ -30,3 +30,6 @@ To use this library management system, follow these steps:
 - When exiting the program the scanner closes, which ensures no memory leaks.
 - Making a separate list for checked out books make it easier for the user to see which books can be checked in.
 - Gave the functionality that when checking books out or in, that the user can only type the first few letters or leave it blank entirely to see the full list. Same goes for selecting the member lending the book.
+
+## Note
+Please take note that the tests folder contains the testing parameters for testing the function of all classes. The `/lib/` folder contains the modules required to run these tests.
