@@ -83,10 +83,11 @@ public class Library {
     public List<Book> getBooksCheckedOut() {
         List<Book> checkedOutBooks = new ArrayList<>();
         for (Member member : members) {
-            if (member.getBorrowedBooks().size() > 0) {
+            if (!member.getBorrowedBooks().isEmpty()) {
                 System.out.println(member.getName() + " has the following books checked out:");
                 for (Book book : member.getBorrowedBooks()) {
                     System.out.println(book.getTitle());
+                    checkedOutBooks.add(book);
                 }
             }
         }

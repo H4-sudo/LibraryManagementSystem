@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-// Inititalize the Member class
+// Initialize the Member class
 public class Member {
     private String name;
     private String email;
