@@ -1,10 +1,12 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 // Class to represent a library
 public class Library {
-    private List<Book> books;
-    private List<Member> members;
+    private final List<Book> books;
+    private final List<Member> members;
 
     // Constructor for the library class
     public Library() {

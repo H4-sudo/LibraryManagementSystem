@@ -17,6 +17,9 @@ class App {
         Scanner scanner = new Scanner(System.in);
         String enter;
 
+        // Adding a class for the main menu
+        Menu menu = new Menu();
+
         // Add some initial books and members to the library
         library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
         library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
@@ -28,31 +31,8 @@ class App {
         library.addMember(new Member("John Doe", "jdoe@mymail.co"));
         library.addMember(new Member("Jane Doe", "janed@themail.co"));
         while (true) {
-            RefreshScreen.refresh();
             // This is the main menu of the Library Management System
-            System.out.println("==========================================================");
-            System.out.println("    ____        _     __   ____              __       ");
-            System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
-            System.out.println("  / /_/ / __ `/ / __  /  / __  / __ \\/ __ \\/ //_/ ___/");
-            System.out.println(" / _, _/ /_/ / / /_/ /  / /_/ / /_/ / /_/ / ,< (__  ) ");
-            System.out.println("/_/ |_|\\__,_/_/\\__,_/  /_____/\\____/\\____/_/|_/____/  ");
-            System.out.println("                                                      ");
-            System.out.println("==========================================================");
-            System.out.println("Welcome to the Library Management System! How can we help you today?");
-            System.out.println("1. Add a book");
-            System.out.println("2. Remove a book");
-            System.out.println("3. Add a member");
-            System.out.println("4. Remove a member");
-            System.out.println("5. Search for books");
-            System.out.println("6. Search for members");
-            System.out.println("7. Check out a book");
-            System.out.println("8. Check in a book");
-            System.out.println("9. View all books");
-            System.out.println("10. View all members");
-            System.out.println("11. View all books checked out");
-            System.out.println("0. Exit");
-            System.out.println("==========================================================");
-            System.out.print("Enter your choice: ");
+            menu.MainMenu();
             String choice = scanner.nextLine();
             RefreshScreen.refresh();
             switch (choice) {

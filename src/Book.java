@@ -49,5 +49,7 @@ public class Book {
     public void toggleAvailability() {
         isAvailable = !isAvailable;
     }
+
+    
     
 }
