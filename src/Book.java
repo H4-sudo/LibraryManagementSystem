@@ -1,9 +1,14 @@
+
+import java.time.LocalDate;
+
 public class Book {
     // The properties of the book class
     private String title;
     private String author;
     private String ISBN;
     private boolean isAvailable;
+    private LocalDate dueDate;
+    private Member borrower;
 
     // This is the constructor for the class
     public Book(String title, String author, String ISBN) {
@@ -11,6 +16,8 @@ public class Book {
         this.author = author;
         this.ISBN = ISBN;
         this.isAvailable = true; // This sets books available by default.
+        this.dueDate = null;
+        this.borrower = null;
     }
 
     // Getters and Setters for the Book class
@@ -50,6 +57,24 @@ public class Book {
         isAvailable = !isAvailable;
     }
 
-    
+    public boolean isBorrowed() {
+        return !isAvailable;
+    }
+
+    public Member getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(Member borrower, LocalDate dueDate) {
+        this.borrower = borrower;
+        this.dueDate = dueDate;
+        this.isAvailable = false;
+    }
+
+    public void removeBorrower() {
+        this.borrower = null;
+        this.dueDate = null;
+        this.isAvailable = true;
+    }
     
 }

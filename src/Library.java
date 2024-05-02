@@ -1,5 +1,4 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,5 +93,33 @@ public class Library {
             }
         }
         return checkedOutBooks;
+    }
+
+    // This is the new method for adding the member to the checked out book and adding a due date.
+    public void borrowBook(Book book, Member member) {
+        if (book.isAvailable()) {
+            LocalDate dueDate = LocalDate.now().plusDays(14); // This sets the due date to 14 days from now
+            book.setBorrower(member, dueDate);
+            member.addBorrowedBook(book);
+            System.out.printf("Book '%s' borrowed by %s.", book.getTitle(), member.getName());
+        } else {
+            System.out.printf("Book '%s' cannot be returned by %s", book.getTitle(), member.getName());
+        }
+    }
+
+    // This is the new method for returning the books
+    public void returnBook(Book book) {
+        if (!book.isAvailable()) {
+            Member member = book.getBorrower();
+            book.removeBorrower();
+            member.removeBorrowedBook(book);
+            System.out.printf("Book '%s' has been returned by %s.", book.getTitle(), member.getName());
+        } else {
+            System.out.printf("Book '%s' is currently not borrowed.", book.getTitle());
+        }
+    }
+
+    public void calculateFines(Book book, LocalDate dueDate) {
+        
     }
 }
