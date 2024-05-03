@@ -4,11 +4,13 @@ import java.util.List;
 
 // Class to represent a library
 public class Library {
+    private final FineCalculator fineCalculator;
     private final List<Book> books;
     private final List<Member> members;
 
     // Constructor for the library class
     public Library() {
+        this.fineCalculator = new FineCalculator();
         books = new ArrayList<>();
         members = new ArrayList<>();
     }
@@ -55,21 +57,21 @@ public class Library {
         return searchResults;
     }
 
-    // Method to lend a book to a member
-    public void lendBook(Book book, Member member) {
-        if (book.isAvailable()) {
-            book.toggleAvailability();
-            member.addBorrowedBook(book);
-        }
-    }
+    // // Method to lend a book to a member
+    // public void lendBook(Book book, Member member) {
+    //     if (book.isAvailable()) {
+    //         book.toggleAvailability();
+    //         member.addBorrowedBook(book);
+    //     }
+    // }
 
-    // Method to return a book from a member
-    public void returnBook(Book book, Member member) {
-        if (member.getBorrowedBooks().contains(book)) {
-            book.toggleAvailability();
-            member.removeBorrowedBook(book);
-        }
-    }
+    // // Method to return a book from a member
+    // public void returnBook(Book book, Member member) {
+    //     if (member.getBorrowedBooks().contains(book)) {
+    //         book.toggleAvailability();
+    //         member.removeBorrowedBook(book);
+    //     }
+    // }
 
     // Getters for the library class
     public List<Book> getBooks() {
@@ -101,6 +103,7 @@ public class Library {
             LocalDate dueDate = LocalDate.now().plusDays(14); // This sets the due date to 14 days from now
             book.setBorrower(member, dueDate);
             member.addBorrowedBook(book);
+            book.setAvailable(false);
             System.out.printf("Book '%s' borrowed by %s.", book.getTitle(), member.getName());
         } else {
             System.out.printf("Book '%s' cannot be returned by %s", book.getTitle(), member.getName());
@@ -108,18 +111,22 @@ public class Library {
     }
 
     // This is the new method for returning the books
-    public void returnBook(Book book) {
+    public void returnBook(Book book, Member member, LocalDate returnDate) {
         if (!book.isAvailable()) {
-            Member member = book.getBorrower();
+            LocalDate dueDate = book.getDueDate();
+            double fineAmount = fineCalculator.calculateFines(dueDate, returnDate);
+            member = book.getBorrower();
             book.removeBorrower();
             member.removeBorrowedBook(book);
+            book.toggleAvailability();
             System.out.printf("Book '%s' has been returned by %s.", book.getTitle(), member.getName());
+            if (fineAmount <= 0) {
+                System.out.printf("No fines were issued to %s", member.getName());
+            } else {
+                System.out.printf("%s had gotten a fine of %.2f%n, due to missing the due date.", member.getName(), fineAmount);
+            }
         } else {
             System.out.printf("Book '%s' is currently not borrowed.", book.getTitle());
         }
-    }
-
-    public void calculateFines(Book book, LocalDate dueDate) {
-        
     }
 }

@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -252,7 +253,7 @@ class App {
                             System.out.print("Enter the index of the member you want to check out the book: ");
                             int memberIndexC = Integer.parseInt(scanner.nextLine());
                             Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
-                            library.lendBook(bookToCheckOut, memberToCheckOut);
+                            library.borrowBook(bookToCheckOut, memberToCheckOut);
                             library.getBooksCheckedOut().add(bookToCheckOut);
                             Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
                             bookToCheckOutN.setAvailable(false);
@@ -320,7 +321,8 @@ class App {
                             System.out.println("Enter the index of the member you want to check in the book: ");
                             int memberIndexI = Integer.parseInt(scanner.next());
                             Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
-                            library.returnBook(bookToCheckIn, memberToCheckIn);
+                            LocalDate date = LocalDate.now();
+                            library.returnBook(bookToCheckIn, memberToCheckIn, date);
                             Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
                             if (bookToCheckInRemove.isAvailable()) {
                                 System.out.println("==========================================================");

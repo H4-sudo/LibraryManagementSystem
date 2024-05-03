@@ -45,6 +45,14 @@ public class Book {
         this.ISBN = ISBN;
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
     public boolean isAvailable() {
         return isAvailable;
     }
@@ -54,7 +62,11 @@ public class Book {
     }
 
     public void toggleAvailability() {
-        isAvailable = !isAvailable;
+        if (isAvailable) {
+            isAvailable = !isAvailable;
+        } else {
+            isAvailable = true;
+        }
     }
 
     public boolean isBorrowed() {

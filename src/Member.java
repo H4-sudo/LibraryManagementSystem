@@ -5,6 +5,7 @@ public class Member {
     private String name;
     private String email;
     private ArrayList<Book> borrowedBooks;
+    private double fine;
 
     // Constructor for the Member class
     public Member(String name, String email) {
@@ -32,6 +33,14 @@ public class Member {
         } else {
             System.out.println("Invalid email format, please try again.");
         }
+    }
+
+    public double getFines() {
+        return fine;
+    }
+
+    public void setFines(double fine) {
+        this.fine = fine;
     }
 
     // Method to check if an entered email is valid
