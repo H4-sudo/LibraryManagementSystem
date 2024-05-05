@@ -1,3 +1,8 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -13,24 +18,21 @@ class App {
      */
     public static void main(String[] args) {
         // Create a new Library object
-        Library library = new Library();
+        Library library = loadLibrary();
         
+        addDefaultBooksAndMembers(library);
+
         Scanner scanner = new Scanner(System.in);
         String enter;
 
         // Adding a class for the main menu
         Menu menu = new Menu();
 
-        // Add some initial books and members to the library
-        library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
-        library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
-        library.addBook(new Book("1984", "George Orwell", "9780451524935"));
-        library.addBook(new Book("Pride and Prejudice", "Jane Austen", "9780679783268"));
-        library.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "9780316769488"));
-        library.addMember(new Member("Jake Blake", "jake@email.co"));
-        library.addMember(new Member("Emma Smith", "esmith@icould.co"));
-        library.addMember(new Member("John Doe", "jdoe@mymail.co"));
-        library.addMember(new Member("Jane Doe", "janed@themail.co"));
+        // Finechecker class
+        FineChecker fineChecker = new FineChecker(library);
+        Thread fineCheckerThread = new Thread(fineChecker);
+        fineCheckerThread.start();
+        
         while (true) {
             // This is the main menu of the Library Management System
             menu.MainMenu();
@@ -437,9 +439,49 @@ class App {
                     System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
                     System.out.println("==========================================================");
+                    Runtime.getRuntime().addShutdownHook(new Thread(() -> saveLibrary(library)));
                     System.exit(0);
                 
             }
+
         }
+    }
+
+    private static void saveLibrary(Library library) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("library.ser"))) {
+            oos.writeObject(library);
+        } catch (IOException e) {
+            System.out.println("Error saving library. Exiting...");
+        }
+    }
+    
+    private static Library loadLibrary() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("library.ser"))) {
+            return (Library) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            // If an error occurs, return a new Library.
+            return new Library();
+        }
+    }
+
+    private static void addDefaultBooksAndMembers (Library library) {
+        // Add some initial books and members to the library
+        List<Book> books = library.getBooks();
+        if (books.isEmpty()) {
+            library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
+            library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
+            library.addBook(new Book("1984", "George Orwell", "9780451524935"));
+            library.addBook(new Book("Pride and Prejudice", "Jane Austen", "9780679783268"));
+            library.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "9780316769488"));
+        }
+        
+        List<Member> members = library.getMembers();
+        if (members.isEmpty()) {
+            library.addMember(new Member("Jake Blake", "jake@email.co"));
+            library.addMember(new Member("Emma Smith", "esmith@icould.co"));
+            library.addMember(new Member("John Doe", "jdoe@mymail.co"));
+            library.addMember(new Member("Jane Doe", "janed@themail.co"));
+        }
+        
     }
 }

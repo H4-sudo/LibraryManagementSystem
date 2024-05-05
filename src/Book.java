@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Book {
+public class Book implements Serializable{
     // The properties of the book class
     private String title;
     private String author;
@@ -87,6 +88,10 @@ public class Book {
         this.borrower = null;
         this.dueDate = null;
         this.isAvailable = true;
+    }
+
+    public boolean isOverdue() {
+        return dueDate != null && LocalDate.now().isAfter(dueDate);
     }
     
 }

@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // Initialize the Member class
-public class Member {
+public class Member implements Serializable {
     private String name;
     private String email;
     private ArrayList<Book> borrowedBooks;

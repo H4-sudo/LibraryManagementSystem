@@ -1,10 +1,13 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 // Class to represent a library
-public class Library {
-    private final FineCalculator fineCalculator;
+public class Library implements Serializable {
+    private transient FineCalculator fineCalculator;
     private final List<Book> books;
     private final List<Member> members;
 
@@ -128,5 +131,14 @@ public class Library {
         } else {
             System.out.printf("Book '%s' is currently not borrowed.", book.getTitle());
         }
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        fineCalculator = new FineCalculator();
+    }
+
+    public void notifyAdmin(Book book) {
+        System.out.println("Admin notified about the overdue book: " + book.getTitle());
     }
 }
