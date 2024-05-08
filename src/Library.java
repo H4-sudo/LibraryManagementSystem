@@ -141,4 +141,16 @@ public class Library implements Serializable {
     public void notifyAdmin(Book book) {
         System.out.println("Admin notified about the overdue book: " + book.getTitle());
     }
+
+    void payFines(Member memberToPayFines, double amount) {
+        // This method is used to pay fines for a member
+        double amountFined = memberToPayFines.getFines();
+        if (amount >= amountFined) {
+            memberToPayFines.setFines(0);
+            System.out.printf("Fines paid successfully by %s. Remaining balance: %.2f%n", memberToPayFines.getName(), memberToPayFines.getFines());
+        } else {
+            memberToPayFines.setFines(amountFined - amount);
+            System.out.printf("Fines paid successfully by %s. Remaining balance: %.2f%n", memberToPayFines.getName(), memberToPayFines.getFines());
+        }
+    }
 }

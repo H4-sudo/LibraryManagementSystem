@@ -20,6 +20,9 @@ public class Menu {
         System.out.println("9. View all books");
         System.out.println("10. View all members");
         System.out.println("11. View all books checked out");
+        System.out.println("12. View fines");
+        System.out.println("13. Pay fines");
+        System.out.println("14. Notification settings");
         System.out.println("0. Exit");
         System.out.println("==========================================================");
         System.out.print("Enter your choice: ");

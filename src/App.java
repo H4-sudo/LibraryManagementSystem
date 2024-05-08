@@ -20,7 +20,10 @@ class App {
         // Create a new Library object
         Library library = loadLibrary();
         
+        // Add some default books and members to the library
         addDefaultBooksAndMembers(library);
+
+        Notifications notifications = new Notifications();
 
         Scanner scanner = new Scanner(System.in);
         String enter;
@@ -433,6 +436,98 @@ class App {
                         break;
                     }
 
+                case "12":
+                    // This is the switch case for viewing fines in the library
+                    System.out.println("==========================================================");
+                    System.out.println("Fines");
+                    System.out.println("==========================================================");
+                    List<Member> allMembersFines = library.getMembers();
+                    if (allMembersFines.isEmpty()) {
+                        System.out.println("==========================================================");
+                        System.out.println("No members found in the library.");
+                        System.out.println("==========================================================");
+                    } else {
+                        System.out.println("==========================================================");
+                        System.out.println("All members in the library:");
+                        System.out.println("==========================================================");
+                        for (int i = 0; i < allMembersFines.size(); i++) {
+                            System.out.println((i + 1) + ". " + allMembersFines.get(i).getName() + " (" + allMembersFines.get(i).getEmail() + ") (Fines: " + allMembersFines.get(i).getFines() + ")");
+                        }
+                    }
+                    System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.out.println("==========================================================");
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
+
+                case "13":
+                    // This is the switch case for paying fines in the library
+                    System.out.println("==========================================================");
+                    System.out.println("Pay Fines");
+                    System.out.println("==========================================================");
+                    System.out.print("Enter the name of the member you want to pay fines for: ");
+                    String memberNameP = scanner.nextLine();
+                    List<Member> searchResultsMembersP = library.searchMembers(memberNameP);
+                    if (searchResultsMembersP.isEmpty()) {
+                        System.out.println("No members found with the name: " + memberNameP);
+                    } else {
+                        System.out.println("Select the member you want to pay fines for:");
+                        for (int i = 0; i < searchResultsMembersP.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsMembersP.get(i).getName() + " (" + searchResultsMembersP.get(i).getEmail() + ") (Fines: " + searchResultsMembersP.get(i).getFines() + ")");
+                        }
+                        try {
+                            System.out.print("Enter the index of the member you want to pay fines for: ");
+                            int memberIndexP = Integer.parseInt(scanner.nextLine());
+                            Member memberToPayFines = searchResultsMembersP.get(memberIndexP - 1);
+                            System.out.print("Enter the amount you want to pay: ");
+                            double amount = Double.parseDouble(scanner.nextLine());
+                            library.payFines(memberToPayFines, amount);
+                            System.out.println("Fines paid successfully!");
+                            System.out.println("==========================================================");
+                            System.out.println("Press Enter to continue...");
+                            enter = scanner.nextLine();
+                            if (enter.isEmpty()) {
+                                break;
+                            } else {
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
+                        }
+                    }
+
+                case "14":
+                    // This is the switch case for notification settings in the library
+                    System.out.println("==========================================================");
+                    System.out.println("Notification Settings");
+                    System.out.println("==========================================================");
+                    System.out.println("1. Enable notifications");
+                    System.out.println("2. Disable notifications");
+                    System.out.println("0. Back to main menu");
+                    System.out.println("==========================================================");
+                    System.out.print("Enter your choice: ");
+                    String notificationChoice = scanner.nextLine();
+                    switch (notificationChoice) {
+                        case "1" -> {
+                            notifications.enableNotifications();
+                            System.out.println("Notifications enabled.");
+                        }
+                        case "2" -> {
+                            notifications.disableNotifications();
+                            System.out.println("Notifications disabled.");
+                        }
+                        case "0" -> {
+                    }
+                        default -> System.out.println("Invalid input. Please enter a valid number.");
+                    }
+                // This is the switch case for going back to the main menu
+                    break;
+
+
                 case "0":
                     // This is the switch case for exiting the application
                     scanner.close();
@@ -455,7 +550,7 @@ class App {
         }
     }
     
-    private static Library loadLibrary() {
+    public static Library loadLibrary() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("library.ser"))) {
             return (Library) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
