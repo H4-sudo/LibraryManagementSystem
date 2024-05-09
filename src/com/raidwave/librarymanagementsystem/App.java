@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-class App {
+public class App {
     /**
      * The main method is the entry point of the Library Management System application.
      * It displays a menu of options to the user and performs corresponding actions based on the user's choice.
