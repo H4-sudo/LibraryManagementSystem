@@ -1,3 +1,5 @@
+package com.raidwave.librarymanagementsystem;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
@@ -38,6 +40,11 @@ public class SystemNotification {
             @Override
             public void run() {
                 checkOverdueBooks();
+                try {
+                    displayTray("Library Management System", "You have overdue books!");
+                } catch (AWTException e) {
+                    System.out.println("System tray not supported!");
+                }
             }
         }, 0, 60 * 1000); // Run every 5 seconds
     }

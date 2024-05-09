@@ -1,3 +1,5 @@
+package com.raidwave.librarymanagementsystem;
+
 public class Menu {
     public void MainMenu() {
         System.out.println("==========================================================");

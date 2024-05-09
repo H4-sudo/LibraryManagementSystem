@@ -1,3 +1,5 @@
+package com.raidwave.librarymanagementsystem;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -105,7 +107,7 @@ public class Library implements Serializable {
             member = book.getBorrower();
             book.removeBorrower();
             member.removeBorrowedBook(book);
-            book.toggleAvailability();
+            book.setAvailable(true);
             System.out.printf("Book '%s' has been returned by %s.", book.getTitle(), member.getName());
             if (fineAmount <= 0) {
                 System.out.printf("No fines were issued to %s", member.getName());

@@ -1,3 +1,5 @@
+package com.raidwave.librarymanagementsystem;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -512,17 +514,19 @@ class App {
                     System.out.print("Enter your choice: ");
                     String notificationChoice = scanner.nextLine();
                     switch (notificationChoice) {
-                        case "1" -> {
+                        case "1":
                             SystemNotification.enableNotifications();
                             System.out.println("Notifications enabled.");
-                        }
-                        case "2" -> {
+                            break;
+                        case "2":
                             SystemNotification.disableNotifications();
                             System.out.println("Notifications disabled.");
-                        }
-                        case "0" -> {
-                    }
-                        default -> System.out.println("Invalid input. Please enter a valid number.");
+                            break;
+                        case "0":
+                            break;
+                        default:
+                            System.out.println("Invalid input. Please enter a valid number.");
+                            break;
                     }
                 // This is the switch case for going back to the main menu
                     break;

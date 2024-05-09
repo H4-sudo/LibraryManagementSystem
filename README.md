@@ -20,6 +20,7 @@ To use this library management system, follow these steps:
 - Email Validation: The `EmailRegistrar` class validates the format of entered email addresses.
 
 ## Reasons for my design choices
+
 - Using separate files make it easy to maintain in the future, therefor a new developer that wants to maintain the project will have an easier time.
 - All variable names are clear to understand where it fits in, helping convey a strong structure.
 - The `Library` class makes use of the `Member` and `Book` classes to make the library management system functional.
@@ -31,5 +32,15 @@ To use this library management system, follow these steps:
 - Making a separate list for checked out books make it easier for the user to see which books can be checked in.
 - Gave the functionality that when checking books out or in, that the user can only type the first few letters or leave it blank entirely to see the full list. Same goes for selecting the member lending the book.
 
+## New classes added
+
+- Added a class to display notifications to the user regarding overdue books.
+- Added a new method in the `Member` class, `Book` class and into the `Library` class for setting fines.
+- Fines have been added to penalise members that don't comply with the borrowing agreement.
+- The `SystemNotification` class notifies the user using a small Prompt box in the form of a GUI.
+- The `Menu` class has been updated to manage notifications, by making them toggleable from on to off.
+- Some concurency issues were fixed that weren't picked up during the creation of the Library Management System.
+
 ## Note
+
 Please take note that the tests folder contains the testing parameters for testing the function of all classes. The `/lib/` folder contains the modules required to run these tests.

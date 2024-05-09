@@ -1,3 +1,5 @@
+package com.raidwave.librarymanagementsystem;
+
 import java.io.IOException;
 
 // Class to refresh the screen
