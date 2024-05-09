@@ -23,18 +23,18 @@ class App {
         // Add some default books and members to the library
         addDefaultBooksAndMembers(library);
 
-        Notifications notifications = new Notifications();
-
         Scanner scanner = new Scanner(System.in);
         String enter;
 
+        Member testMember = new Member("Mike", "mike@mail.co");
+        library.addMember(testMember);
+        Book testBook = new Book("The Test Book", "The Author", "00012345");
+        library.addBook(testBook);
+        library.borrowBookForTesting(testBook, testMember, LocalDate.of(2024, 4, 1));
+
+
         // Adding a class for the main menu
         Menu menu = new Menu();
-
-        // Finechecker class
-        FineChecker fineChecker = new FineChecker(library);
-        Thread fineCheckerThread = new Thread(fineChecker);
-        fineCheckerThread.start();
         
         while (true) {
             // This is the main menu of the Library Management System
@@ -513,11 +513,11 @@ class App {
                     String notificationChoice = scanner.nextLine();
                     switch (notificationChoice) {
                         case "1" -> {
-                            notifications.enableNotifications();
+                            SystemNotification.enableNotifications();
                             System.out.println("Notifications enabled.");
                         }
                         case "2" -> {
-                            notifications.disableNotifications();
+                            SystemNotification.disableNotifications();
                             System.out.println("Notifications disabled.");
                         }
                         case "0" -> {

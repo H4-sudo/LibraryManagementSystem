@@ -60,22 +60,6 @@ public class Library implements Serializable {
         return searchResults;
     }
 
-    // // Method to lend a book to a member
-    // public void lendBook(Book book, Member member) {
-    //     if (book.isAvailable()) {
-    //         book.toggleAvailability();
-    //         member.addBorrowedBook(book);
-    //     }
-    // }
-
-    // // Method to return a book from a member
-    // public void returnBook(Book book, Member member) {
-    //     if (member.getBorrowedBooks().contains(book)) {
-    //         book.toggleAvailability();
-    //         member.removeBorrowedBook(book);
-    //     }
-    // }
-
     // Getters for the library class
     public List<Book> getBooks() {
         return books;
@@ -127,6 +111,7 @@ public class Library implements Serializable {
                 System.out.printf("No fines were issued to %s", member.getName());
             } else {
                 System.out.printf("%s had gotten a fine of %.2f%n, due to missing the due date.", member.getName(), fineAmount);
+                member.addFine(fineAmount);
             }
         } else {
             System.out.printf("Book '%s' is currently not borrowed.", book.getTitle());
@@ -151,6 +136,18 @@ public class Library implements Serializable {
         } else {
             memberToPayFines.setFines(amountFined - amount);
             System.out.printf("Fines paid successfully by %s. Remaining balance: %.2f%n", memberToPayFines.getName(), memberToPayFines.getFines());
+        }
+    }
+
+    // This method is solely used for testing purposes
+    void borrowBookForTesting(Book book, Member member, LocalDate dueDate) {
+        if (book.isAvailable()) {
+            book.setBorrower(member, dueDate);
+            member.addBorrowedBook(book);
+            book.setAvailable(false);
+            System.out.printf("Book '%s' borrowed by %s.", book.getTitle(), member.getName());
+        } else {
+            System.out.printf("Book '%s' cannot be returned by %s", book.getTitle(), member.getName());
         }
     }
 }

@@ -44,6 +44,10 @@ public class Member implements Serializable {
         this.fine = fine;
     }
 
+    public void addFine(double fine) {
+        this.fine += fine;
+    }
+
     // Method to check if an entered email is valid
     public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";

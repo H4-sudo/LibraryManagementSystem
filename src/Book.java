@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -92,6 +91,14 @@ public class Book implements Serializable{
 
     public boolean isOverdue() {
         return dueDate != null && LocalDate.now().isAfter(dueDate);
+    }
+
+    public void setOverdue(boolean b) {
+        if (isOverdue()) {
+            System.out.println("The book " + title + " is overdue.");
+        } else {
+            System.out.println("The book " + title + " is not overdue.");
+        }
     }
     
 }
