@@ -1,5 +1,10 @@
 package com.raidwave.librarymanagementsystem;
 
+/**
+ *
+ * @author henrico
+ */
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;

@@ -1,5 +1,10 @@
 package com.raidwave.librarymanagementsystem;
 
+/**
+ *
+ * @author henrico
+ */
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

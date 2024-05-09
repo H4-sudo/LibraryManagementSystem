@@ -1,5 +1,10 @@
 package com.raidwave.librarymanagementsystem;
 
+/**
+ *
+ * @author henrico
+ */
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

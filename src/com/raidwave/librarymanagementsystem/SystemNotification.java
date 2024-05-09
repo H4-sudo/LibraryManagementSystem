@@ -1,5 +1,10 @@
 package com.raidwave.librarymanagementsystem;
 
+/**
+ *
+ * @author henrico
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;

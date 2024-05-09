@@ -1,5 +1,10 @@
 package com.raidwave.librarymanagementsystem;
 
+/**
+ *
+ * @author henrico
+ */
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
