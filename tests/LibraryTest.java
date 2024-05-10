@@ -1,4 +1,9 @@
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
+
+import com.raidwave.librarymanagementsystem.Book;
+import com.raidwave.librarymanagementsystem.Library;
+import com.raidwave.librarymanagementsystem.Member;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,25 +66,26 @@ class LibraryTest {
     }
 
     @Test
-    void lendBook() {
+    void borrowBook() {
         Library library = new Library();
         Book book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "1234567890");
         Member member = new Member("John Doe", "jdoe@jmail.com");
         library.addBook(book);
         library.addMember(member);
-        library.lendBook(book, member);
+        library.borrowBook(book, member);
         assertFalse(book.isAvailable()); // Should return false
     }
 
     @Test
     void returnBook() {
+        LocalDate returnDate = LocalDate.now();
         Library library = new Library();
         Book book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "1234567890");
         Member member = new Member("John Doe", "jdoe@jmail.com");
         library.addBook(book);
         library.addMember(member);
-        library.lendBook(book, member);
-        library.returnBook(book, member);
+        library.borrowBook(book, member);
+        library.returnBook(book, member, returnDate);
         assertTrue(book.isAvailable()); // Should return true
     }
 
@@ -108,7 +114,7 @@ class LibraryTest {
         Member member = new Member("John Doe", "jdoe@jmail.com");
         library.addBook(book);
         library.addMember(member);
-        library.lendBook(book, member);
+        library.borrowBook(book, member);
         assertEquals(1, library.getBooksCheckedOut().size()); // Should return 1
     }
 
@@ -154,5 +160,39 @@ class LibraryTest {
         library.addMember(member12);
         library.addMember(member13);
         assertEquals(14, library.getMembers().size()); // Should return 20
+    }
+
+    @Test
+    void searchBooksByTitle() {
+        Library library = new Library();
+        Book book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "1234567890");
+        Book book1 = new Book("Java for You", "John Doe", "0987654321");
+        Book book2 = new Book("Java for Beginners", "Jane Doe", "0987654321");
+        library.addBook(book);
+        library.addBook(book1);
+        library.addBook(book2);
+        assertEquals(1, library.searchBooks("gatsby").size()); // Should return 1
+    }
+
+    @Test
+    void searchMembersByName() {
+        Library library = new Library();
+        Member member = new Member("John Doe", "jd@mail.co");
+        Member member1 = new Member("Jane Doe", "jad@mail.co");
+        library.addMember(member);
+        library.addMember(member1);
+        assertEquals(1, library.searchMembers("john").size()); // Should return 1
+    }
+
+    @Test
+    void fineCalculator() {
+        Library library = new Library();
+        Book book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "1234567890");
+        Member member = new Member("John Doe", "jd@mail.co");
+        library.addBook(book);
+        library.addMember(member);
+        library.borrowBook(book, member);
+        library.returnBook(book, member, LocalDate.now().plusDays(35));
+        assertEquals(10, member.getFines()); // Should return 10
     }
 }

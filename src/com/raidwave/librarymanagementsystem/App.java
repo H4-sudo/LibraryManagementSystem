@@ -1,7 +1,20 @@
+package com.raidwave.librarymanagementsystem;
+
+/**
+ *
+ * @author henrico
+ */
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-class App {
+public class App {
     /**
      * The main method is the entry point of the Library Management System application.
      * It displays a menu of options to the user and performs corresponding actions based on the user's choice.
@@ -12,47 +25,27 @@ class App {
      */
     public static void main(String[] args) {
         // Create a new Library object
-        Library library = new Library();
+        Library library = loadLibrary();
         
+        // Add some default books and members to the library
+        addDefaultBooksAndMembers(library);
+
         Scanner scanner = new Scanner(System.in);
         String enter;
 
-        // Add some initial books and members to the library
-        library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
-        library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
-        library.addBook(new Book("1984", "George Orwell", "9780451524935"));
-        library.addBook(new Book("Pride and Prejudice", "Jane Austen", "9780679783268"));
-        library.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "9780316769488"));
-        library.addMember(new Member("Jake Blake", "jake@email.co"));
-        library.addMember(new Member("Emma Smith", "esmith@icould.co"));
-        library.addMember(new Member("John Doe", "jdoe@mymail.co"));
-        library.addMember(new Member("Jane Doe", "janed@themail.co"));
+        Member testMember = new Member("Mike", "mike@mail.co");
+        library.addMember(testMember);
+        Book testBook = new Book("The Test Book", "The Author", "00012345");
+        library.addBook(testBook);
+        library.borrowBookForTesting(testBook, testMember, LocalDate.of(2024, 4, 1));
+
+
+        // Adding a class for the main menu
+        Menu menu = new Menu();
+        
         while (true) {
-            RefreshScreen.refresh();
             // This is the main menu of the Library Management System
-            System.out.println("==========================================================");
-            System.out.println("    ____        _     __   ____              __       ");
-            System.out.println("   / __ \\____ _(_)___/ /  / __ )____  ____  / /_______");
-            System.out.println("  / /_/ / __ `/ / __  /  / __  / __ \\/ __ \\/ //_/ ___/");
-            System.out.println(" / _, _/ /_/ / / /_/ /  / /_/ / /_/ / /_/ / ,< (__  ) ");
-            System.out.println("/_/ |_|\\__,_/_/\\__,_/  /_____/\\____/\\____/_/|_/____/  ");
-            System.out.println("                                                      ");
-            System.out.println("==========================================================");
-            System.out.println("Welcome to the Library Management System! How can we help you today?");
-            System.out.println("1. Add a book");
-            System.out.println("2. Remove a book");
-            System.out.println("3. Add a member");
-            System.out.println("4. Remove a member");
-            System.out.println("5. Search for books");
-            System.out.println("6. Search for members");
-            System.out.println("7. Check out a book");
-            System.out.println("8. Check in a book");
-            System.out.println("9. View all books");
-            System.out.println("10. View all members");
-            System.out.println("11. View all books checked out");
-            System.out.println("0. Exit");
-            System.out.println("==========================================================");
-            System.out.print("Enter your choice: ");
+            menu.MainMenu();
             String choice = scanner.nextLine();
             RefreshScreen.refresh();
             switch (choice) {
@@ -272,7 +265,7 @@ class App {
                             System.out.print("Enter the index of the member you want to check out the book: ");
                             int memberIndexC = Integer.parseInt(scanner.nextLine());
                             Member memberToCheckOut = searchResultsMembersC.get(memberIndexC - 1);
-                            library.lendBook(bookToCheckOut, memberToCheckOut);
+                            library.borrowBook(bookToCheckOut, memberToCheckOut);
                             library.getBooksCheckedOut().add(bookToCheckOut);
                             Book bookToCheckOutN = searchResultsBooksC.get(bookIndexC - 1);
                             bookToCheckOutN.setAvailable(false);
@@ -340,7 +333,8 @@ class App {
                             System.out.println("Enter the index of the member you want to check in the book: ");
                             int memberIndexI = Integer.parseInt(scanner.next());
                             Member memberToCheckIn = searchResultsMembersI.get(memberIndexI - 1);
-                            library.returnBook(bookToCheckIn, memberToCheckIn);
+                            LocalDate date = LocalDate.now();
+                            library.returnBook(bookToCheckIn, memberToCheckIn, date);
                             Book bookToCheckInRemove = searchResultsBooksI.get(bookIndexI - 1);
                             if (bookToCheckInRemove.isAvailable()) {
                                 System.out.println("==========================================================");
@@ -449,15 +443,149 @@ class App {
                         break;
                     }
 
+                case "12":
+                    // This is the switch case for viewing fines in the library
+                    System.out.println("==========================================================");
+                    System.out.println("Fines");
+                    System.out.println("==========================================================");
+                    List<Member> allMembersFines = library.getMembers();
+                    if (allMembersFines.isEmpty()) {
+                        System.out.println("==========================================================");
+                        System.out.println("No members found in the library.");
+                        System.out.println("==========================================================");
+                    } else {
+                        System.out.println("==========================================================");
+                        System.out.println("All members in the library:");
+                        System.out.println("==========================================================");
+                        for (int i = 0; i < allMembersFines.size(); i++) {
+                            System.out.println((i + 1) + ". " + allMembersFines.get(i).getName() + " (" + allMembersFines.get(i).getEmail() + ") (Fines: " + allMembersFines.get(i).getFines() + ")");
+                        }
+                    }
+                    System.out.println("==========================================================");
+                    System.out.println("Press Enter to continue...");
+                    System.out.println("==========================================================");
+                    enter = scanner.nextLine();
+                    if (enter.isEmpty()) {
+                        break;
+                    } else {
+                        break;
+                    }
+
+                case "13":
+                    // This is the switch case for paying fines in the library
+                    System.out.println("==========================================================");
+                    System.out.println("Pay Fines");
+                    System.out.println("==========================================================");
+                    System.out.print("Enter the name of the member you want to pay fines for: ");
+                    String memberNameP = scanner.nextLine();
+                    List<Member> searchResultsMembersP = library.searchMembers(memberNameP);
+                    if (searchResultsMembersP.isEmpty()) {
+                        System.out.println("No members found with the name: " + memberNameP);
+                    } else {
+                        System.out.println("Select the member you want to pay fines for:");
+                        for (int i = 0; i < searchResultsMembersP.size(); i++) {
+                            System.out.println((i + 1) + ". " + searchResultsMembersP.get(i).getName() + " (" + searchResultsMembersP.get(i).getEmail() + ") (Fines: " + searchResultsMembersP.get(i).getFines() + ")");
+                        }
+                        try {
+                            System.out.print("Enter the index of the member you want to pay fines for: ");
+                            int memberIndexP = Integer.parseInt(scanner.nextLine());
+                            Member memberToPayFines = searchResultsMembersP.get(memberIndexP - 1);
+                            System.out.print("Enter the amount you want to pay: ");
+                            double amount = Double.parseDouble(scanner.nextLine());
+                            library.payFines(memberToPayFines, amount);
+                            System.out.println("Fines paid successfully!");
+                            System.out.println("==========================================================");
+                            System.out.println("Press Enter to continue...");
+                            enter = scanner.nextLine();
+                            if (enter.isEmpty()) {
+                                break;
+                            } else {
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
+                        }
+                    }
+
+                case "14":
+                    // This is the switch case for notification settings in the library
+                    System.out.println("==========================================================");
+                    System.out.println("Notification Settings");
+                    System.out.println("==========================================================");
+                    System.out.println("1. Enable notifications");
+                    System.out.println("2. Disable notifications");
+                    System.out.println("0. Back to main menu");
+                    System.out.println("==========================================================");
+                    System.out.print("Enter your choice: ");
+                    String notificationChoice = scanner.nextLine();
+                    switch (notificationChoice) {
+                        case "1":
+                            SystemNotification.enableNotifications();
+                            System.out.println("Notifications enabled.");
+                            break;
+                        case "2":
+                            SystemNotification.disableNotifications();
+                            System.out.println("Notifications disabled.");
+                            break;
+                        case "0":
+                            break;
+                        default:
+                            System.out.println("Invalid input. Please enter a valid number.");
+                            break;
+                    }
+                // This is the switch case for going back to the main menu
+                    break;
+
+
                 case "0":
                     // This is the switch case for exiting the application
                     scanner.close();
                     System.out.println("==========================================================");
                     System.out.println("Thank you for using the Library Management System!");
                     System.out.println("==========================================================");
+                    Runtime.getRuntime().addShutdownHook(new Thread(() -> saveLibrary(library)));
                     System.exit(0);
                 
             }
+
         }
+    }
+
+    private static void saveLibrary(Library library) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("library.ser"))) {
+            oos.writeObject(library);
+        } catch (IOException e) {
+            System.out.println("Error saving library. Exiting...");
+        }
+    }
+    
+    public static Library loadLibrary() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("library.ser"))) {
+            return (Library) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            // If an error occurs, return a new Library.
+            return new Library();
+        }
+    }
+
+    private static void addDefaultBooksAndMembers (Library library) {
+        // Add some initial books and members to the library
+        List<Book> books = library.getBooks();
+        if (books.isEmpty()) {
+            library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
+            library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
+            library.addBook(new Book("1984", "George Orwell", "9780451524935"));
+            library.addBook(new Book("Pride and Prejudice", "Jane Austen", "9780679783268"));
+            library.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "9780316769488"));
+        }
+        
+        List<Member> members = library.getMembers();
+        if (members.isEmpty()) {
+            library.addMember(new Member("Jake Blake", "jake@email.co"));
+            library.addMember(new Member("Emma Smith", "esmith@icould.co"));
+            library.addMember(new Member("John Doe", "jdoe@mymail.co"));
+            library.addMember(new Member("Jane Doe", "janed@themail.co"));
+        }
+        
     }
 }

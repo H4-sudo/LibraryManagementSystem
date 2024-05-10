@@ -1,10 +1,19 @@
+package com.raidwave.librarymanagementsystem;
+
+/**
+ *
+ * @author henrico
+ */
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // Initialize the Member class
-public class Member {
+public class Member implements Serializable {
     private String name;
     private String email;
     private ArrayList<Book> borrowedBooks;
+    private double fine;
 
     // Constructor for the Member class
     public Member(String name, String email) {
@@ -32,6 +41,18 @@ public class Member {
         } else {
             System.out.println("Invalid email format, please try again.");
         }
+    }
+
+    public double getFines() {
+        return fine;
+    }
+
+    public void setFines(double fine) {
+        this.fine = fine;
+    }
+
+    public void addFine(double fine) {
+        this.fine += fine;
     }
 
     // Method to check if an entered email is valid
